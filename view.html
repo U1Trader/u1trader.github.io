@@ -7,7 +7,7 @@
 <meta name="background-color" content="#000000">
 <title>U1Trader | Payout</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}.topbar{min-height:48px;flex-shrink:0;display:flex;align-items:center;gap:12px;padding:7px 12px;background:#090909;border-bottom:1px solid #242424}.back{color:#f0cf78;text-decoration:none;font-size:14px;font-weight:700;padding:8px 10px;border:1px solid #51452b;border-radius:8px;white-space:nowrap}.title{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ddd}.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px;background:#000}.stage img{display:block;max-width:100%;max-height:calc(100dvh - 70px);width:auto;height:auto;object-fit:contain}.pdfwrap{width:100%;height:calc(100dvh - 70px);overflow:auto;display:flex;justify-content:center;align-items:flex-start;background:#202124;padding:8px}.pdfwrap canvas{display:block;max-width:100%;height:auto!important;background:white;box-shadow:0 2px 12px #0008}.message{color:#ddd;text-align:center;padding:24px;line-height:1.6}.message a{color:#f0cf78}.error{color:#fff;text-align:center;padding:24px}
+*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}.topbar{min-height:48px;flex-shrink:0;display:flex;align-items:center;gap:12px;padding:7px 12px;background:#090909;border-bottom:1px solid #242424}.back{color:#f0cf78;text-decoration:none;font-size:14px;font-weight:700;padding:8px 10px;border:1px solid #51452b;border-radius:8px;white-space:nowrap}.title{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ddd}.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px;background:#000}.stage img{display:block;max-width:100%;max-height:calc(100dvh - 80px);width:auto;height:auto;object-fit:contain}.pdfwrap{width:100%;height:calc(100dvh - 70px);overflow:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#202124;padding:8px}.pdfwrap.multipage{justify-content:flex-start}.pdfwrap canvas{display:block;flex:0 0 auto;max-width:100%;height:auto!important;background:white;box-shadow:0 2px 12px #0008}.message{color:#ddd;text-align:center;padding:24px;line-height:1.6}.message a{color:#f0cf78}.error{color:#fff;text-align:center;padding:24px}
 </style>
 </head>
 <body>
@@ -25,34 +25,42 @@ if(!allowed.test(file)){
  title.textContent=file.replace(/[-_]/g,' ');
  if(/\.pdf$/i.test(file)){
    stage.innerHTML='<div class="pdfwrap" id="pdfwrap"><div class="message">Loading PDF…</div></div>';
-   const script=document.createElement('script');
-   script.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-   script.onload=async()=>{
+   const loadPdfJs=()=>new Promise((resolve,reject)=>{
+     if(window.pdfjsLib){resolve();return;}
+     const script=document.createElement('script');
+     script.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+     script.onload=resolve;script.onerror=reject;document.head.appendChild(script);
+   });
+   (async()=>{
+     const wrap=document.getElementById('pdfwrap');
      try{
+       await loadPdfJs();
        pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
        const pdf=await pdfjsLib.getDocument({url:file}).promise;
-       const wrap=document.getElementById('pdfwrap');
        wrap.replaceChildren();
+       if(pdf.numPages>1)wrap.classList.add('multipage');
        for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
          const page=await pdf.getPage(pageNum);
          const base=page.getViewport({scale:1});
          const availableWidth=Math.max(240,wrap.clientWidth-16);
-         const scale=Math.min(2.2,availableWidth/base.width);
+         const availableHeight=Math.max(240,wrap.clientHeight-24);
+         const fitScale=Math.min(availableWidth/base.width,availableHeight/base.height);
+         const scale=Math.min(2,fitScale);
          const viewport=page.getViewport({scale});
          const canvas=document.createElement('canvas');
-         const ctx=canvas.getContext('2d');
-         canvas.width=Math.floor(viewport.width);
-         canvas.height=Math.floor(viewport.height);
-         canvas.style.margin='0 auto 12px';
+         const ctx=canvas.getContext('2d',{alpha:false});
+         const pixelRatio=Math.min(window.devicePixelRatio||1,2);
+         canvas.width=Math.floor(viewport.width*pixelRatio);
+         canvas.height=Math.floor(viewport.height*pixelRatio);
+         canvas.style.width=Math.floor(viewport.width)+'px';
+         canvas.style.height=Math.floor(viewport.height)+'px';
          wrap.appendChild(canvas);
-         await page.render({canvasContext:ctx,viewport}).promise;
+         await page.render({canvasContext:ctx,viewport:page.getViewport({scale:scale*pixelRatio})}).promise;
        }
      }catch(e){
-       document.getElementById('pdfwrap').innerHTML='<div class="message">PDF preview could not load.<br><a href="'+file+'" target="_blank" rel="noopener">Open PDF directly</a></div>';
+       wrap.innerHTML='<div class="message">PDF preview could not load.<br><a href="'+file+'" target="_blank" rel="noopener">Open PDF directly</a></div>';
      }
-   };
-   script.onerror=()=>{document.getElementById('pdfwrap').innerHTML='<div class="message">PDF preview library could not load.<br><a href="'+file+'" target="_blank" rel="noopener">Open PDF directly</a></div>';};
-   document.head.appendChild(script);
+   })();
  }else{
    const img=document.createElement('img');img.alt='Payout certificate';img.src=file;stage.replaceChildren(img);
  }
