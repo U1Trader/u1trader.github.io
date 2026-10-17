@@ -155,6 +155,34 @@ body.site-unlocked>main{border-top:0!important}
 @media(max-width:700px){body.site-unlocked #siteSidebarToggle{left:70px!important}}
 body.competition-overlay-open #siteSidebarToggle,body.competition-overlay-open .site-top-profile{display:none!important}
 </style>
+<style id="global-top-navigation-layout">
+body.site-unlocked #siteSidebar,body.site-unlocked #siteSidebarToggle{display:none!important;visibility:hidden!important;pointer-events:none!important}
+body.site-unlocked>header.nav,body.site-unlocked>main,body.site-unlocked>footer{margin-left:0!important}
+body.site-unlocked header.nav .navin{position:relative!important;min-height:72px!important}
+body.site-unlocked header.nav .navlinks{margin-left:auto!important}
+body.site-unlocked .site-global-center-nav{position:absolute;left:50%;top:0;transform:translateX(-50%);height:100%;display:flex;align-items:center;gap:8px}
+body.site-unlocked .site-global-center-nav button{padding:9px 15px;border:1px solid transparent;border-radius:9px;background:transparent;color:#e6dece;font:700 13px Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+body.site-unlocked .site-global-center-nav button:hover,body.site-unlocked .site-global-center-nav button.active{color:#f4dba2;background:rgba(217,181,109,.12);border-color:rgba(217,181,109,.24)}
+body.site-unlocked .site-top-profile{right:18px!important;top:17px!important}
+body.site-unlocked #siteGlobalProfileMenu{position:fixed;z-index:2147482000;right:18px;top:62px;width:min(280px,calc(100vw - 24px));padding:12px;border:1px solid rgba(217,181,109,.32);border-radius:13px;background:#11110f;box-shadow:0 16px 45px #0009;color:#f6f2e9}
+body.site-unlocked #siteGlobalProfileMenu[hidden]{display:none!important}
+body.site-unlocked #siteGlobalProfileMenu .sgpm-user{padding:5px 7px 12px;border-bottom:1px solid rgba(217,181,109,.18);margin-bottom:8px}
+body.site-unlocked #siteGlobalProfileMenu .sgpm-user strong{display:block;font-size:13px;overflow-wrap:anywhere}
+body.site-unlocked #siteGlobalProfileMenu .sgpm-user span{display:block;color:#bdb6a8;font-size:11px;margin-top:4px;overflow-wrap:anywhere}
+body.site-unlocked #siteGlobalProfileMenu button{display:flex;align-items:center;gap:9px;width:100%;padding:10px 9px;border:0;border-radius:8px;background:transparent;color:#eee5d5;text-align:left;font:600 12px Inter,system-ui,sans-serif;cursor:pointer}
+body.site-unlocked #siteGlobalProfileMenu button:hover{background:rgba(217,181,109,.12);color:#f4dba2}
+body.site-unlocked #siteGlobalProfileMenu .sgpm-danger{color:#ffb0a8}
+@media(max-width:700px){
+ body.site-unlocked header.nav .navin{min-height:64px!important;width:calc(100% - 20px)!important}
+ body.site-unlocked header.nav .navlinks{display:none!important}
+ body.site-unlocked .site-global-center-nav{gap:2px}
+ body.site-unlocked .site-global-center-nav button{padding:8px 7px;font-size:11px}
+ body.site-unlocked .site-top-profile{top:16px!important;right:8px!important;padding:4px!important}
+ body.site-unlocked .site-top-profile-name{display:none!important}
+ body.site-unlocked #siteGlobalProfileMenu{right:8px;top:60px}
+}
+@media(max-width:420px){body.site-unlocked header.nav .logo>span{display:none}body.site-unlocked .site-global-center-nav{left:45%}}
+</style>
 </head>
 <body>
 
@@ -178,7 +206,7 @@ body.competition-overlay-open #siteSidebarToggle,body.competition-overlay-open .
  </div>
 </div>
 
-<button type="button" class="site-top-profile" id="siteTopProfile" aria-label="Open My Profile" title="My Profile"><span class="site-top-profile-initial" id="siteTopProfileInitial">U</span><span class="site-top-profile-name" id="siteTopProfileName">My Profile</span></button>
+<button type="button" class="site-top-profile" id="siteTopProfile" aria-label="Open My Profile" title="My Profile"><span class="site-top-profile-initial" id="siteTopProfileInitial">U</span><span class="site-top-profile-name" id="siteTopProfileName">My Profile</span></button><div id="siteGlobalProfileMenu" hidden><div class="sgpm-user"><strong id="sgpmName">U1Trader Member</strong><span id="sgpmEmail"></span></div><button type="button" id="sgpmOpenProfile">👤 My Profile</button><button type="button" id="sgpmMaintenance" style="display:none">🛠 Maintenance: OFF</button><button type="button" id="sgpmLogout" class="sgpm-danger">↪ Logout</button></div>
  <div class="site-profile-back" id="siteProfileBack" role="dialog" aria-modal="true" aria-labelledby="siteProfileTitle">
  <div class="site-profile-card">
   <div class="eyebrow">ACCOUNT</div><h2 id="siteProfileTitle">My Profile</h2>
@@ -196,7 +224,7 @@ body.competition-overlay-open #siteSidebarToggle,body.competition-overlay-open .
  </div>
 </div>
 
-<header class="nav"><div class="wrap navin"><a class="logo" href="#home"><img class="brand-mark" src="u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="navlinks"><a href="#about">About</a><a href="#discounts">Discounts</a><a href="#payouts">Payout Gallery</a></nav></div></header>
+<header class="nav"><div class="wrap navin"><a class="logo" href="#home"><img class="brand-mark" src="u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="site-global-center-nav" aria-label="Main navigation"><button type="button" id="siteGlobalHomeBtn" class="active">🏠 Home</button><button type="button" id="siteGlobalCompetitionBtn">🏆 Competition</button></nav><nav class="navlinks"><a href="#about">About</a><a href="#discounts">Discounts</a><a href="#payouts">Payout Gallery</a></nav></div></header>
 <main>
 <section id="home" style="border-top:0;padding-top:0"><div class="wrap hero"><div><div class="eyebrow">Trading journey · Discipline · Growth</div><h1>Trade with<br><span>purpose.</span><br>Grow with intent.</h1><p>I'm Tharmesh — a full-time trader focused on XAUUSD (Gold), learning through every market phase, and building towards bigger goals. Welcome to my trading space.</p><div class="actions"><a class="btn secondary" href="#payouts">View Payout Gallery ↓</a></div><div class="tagrow"><span class="tag">8+ years trading experience</span><span class="tag">XAUUSD · Gold</span><span class="tag">Full-time trader</span></div></div><aside class="heroCard"><div><div class="eyebrow">U1Trader / Personal trading brand</div><h2 style="font-size:2rem;margin:14px 0 0">The journey<br>is far from over.</h2><div class="goldline"></div><p style="color:#c7c0b1;margin:0">From early losses to consistent progress — staying patient, improving the process, and helping the people around me.</p></div><div class="statgrid"><div class="stat"><strong>8+ Years</strong><small>Trading experience</small></div><div class="stat"><strong>~$30K</strong><small>Payouts shared by me</small></div></div></aside></div></section>
 <section id="about"><div class="wrap"><div class="sectionhead"><div><div class="eyebrow">A little about me</div><h2>My trading journey</h2></div><p>Every stage taught me something. The goal is bigger than a single trade.</p></div><div class="aboutgrid"><article class="card"><p class="quote">“This is just the beginning. The dream is much bigger.” ❤️‍🔥📈</p><p>I'm Tharmesh, and I have over 8 years of trading experience. I've tried almost every trading strategy, but Elliott Wave Theory is the one I haven't explored yet. My one and only favourite pair has always been XAUUSD (Gold).</p><p>When I started trading, I faced a lot of losses — around $4,000. Over the last 2 years, I've become consistently profitable and made around $30K in payouts.</p><p>Now I'm a full-time trader, working towards my biggest goals. One of my biggest motivations is supporting the people around me and helping them in any way I can.</p><div class="tagrow"><span class="tag">Patience</span><span class="tag">Consistency</span><span class="tag">Gold trader</span><span class="tag">Keep pushing</span></div></article><div class="socials"><div class="profile-photo-card"><img src="tharmesh-profile.png" alt="Tharmesh, U1Trader"><div class="profile-photo-caption"><strong>Tharmesh · U1Trader</strong><small>Full-time trader · XAUUSD / Gold</small></div></div><a class="social" href="https://www.instagram.com/u1trader/" target="_blank" rel="noopener"><div><b>Instagram</b><small>@u1trader · Follow the journey</small></div><span class="arrow">↗</span></a><a class="social" href="https://www.youtube.com/@U1Trader" target="_blank" rel="noopener"><div><b>YouTube</b><small>U1Trader · Videos and updates</small></div><span class="arrow">↗</span></a><a class="social" href="https://t.me/+yuDZAflJXXNmZmI1" target="_blank" rel="noopener"><div><b>Telegram Community</b><small>Join the U1Trader community</small></div><span class="arrow">↗</span></a><div class="card"><div class="eyebrow">My focus</div><h3 style="margin:8px 0">XAUUSD · Gold 🥇</h3><p style="margin:0">I keep learning, refining my process, and working towards long-term goals — one decision at a time.</p></div></div></div></div></section>
@@ -396,6 +424,7 @@ function setSiteUnlocked(user){
  document.body.classList.toggle('site-admin',isSiteAdmin(user));
  const meta=user?.user_metadata||{};
  document.getElementById('siteSidebarName').textContent=meta.full_name||user?.email||'U1Trader Member';
+ const menuName=document.getElementById('sgpmName');if(menuName)menuName.textContent=meta.full_name||user?.email||'U1Trader Member';const menuEmail=document.getElementById('sgpmEmail');if(menuEmail)menuEmail.textContent=user?.email||'';const menuMaintenance=document.getElementById('sgpmMaintenance');if(menuMaintenance){menuMaintenance.style.display=isSiteAdmin(user)?'flex':'none';menuMaintenance.textContent='🛠 Maintenance: '+(siteMaintenanceEnabled?'ON':'OFF');}
   const profileLabel='My Profile';
   document.getElementById('siteTopProfileName').textContent=profileLabel;
   document.getElementById('siteTopProfileInitial').textContent=(profileLabel.trim()[0]||'U').toUpperCase();
@@ -436,7 +465,13 @@ async function showSiteProfile(){
  document.getElementById('siteProfileBack').classList.add('is-open');
 }
 document.getElementById('siteMaintenanceToggle').addEventListener('click',()=>setMaintenanceMode(!siteMaintenanceEnabled));
-document.getElementById('siteTopProfile').addEventListener('click',showSiteProfile);
+document.getElementById('siteTopProfile').addEventListener('click',event=>{event.stopPropagation();const menu=document.getElementById('siteGlobalProfileMenu');menu.hidden=!menu.hidden;});
+document.getElementById('sgpmOpenProfile').addEventListener('click',()=>{document.getElementById('siteGlobalProfileMenu').hidden=true;showSiteProfile();});
+document.getElementById('sgpmMaintenance').addEventListener('click',()=>{document.getElementById('siteGlobalProfileMenu').hidden=true;setMaintenanceMode(!siteMaintenanceEnabled);});
+document.getElementById('sgpmLogout').addEventListener('click',()=>{document.getElementById('siteGlobalProfileMenu').hidden=true;document.getElementById('siteLogoutBtn').click();});
+document.addEventListener('click',event=>{const menu=document.getElementById('siteGlobalProfileMenu');if(menu&&!menu.hidden&&!menu.contains(event.target)&&!document.getElementById('siteTopProfile').contains(event.target))menu.hidden=true;});
+document.getElementById('siteGlobalHomeBtn').addEventListener('click',()=>{document.getElementById('siteGlobalProfileMenu').hidden=true;closeCompetitionApp();document.getElementById('siteGlobalHomeBtn').classList.add('active');document.getElementById('siteGlobalCompetitionBtn').classList.remove('active');window.scrollTo({top:0,behavior:'smooth'});});
+document.getElementById('siteGlobalCompetitionBtn').addEventListener('click',()=>{document.getElementById('siteGlobalProfileMenu').hidden=true;document.getElementById('siteGlobalHomeBtn').classList.remove('active');document.getElementById('siteGlobalCompetitionBtn').classList.add('active');openCompetitionApp();});
 document.getElementById('siteProfileClose').addEventListener('click',()=>document.getElementById('siteProfileBack').classList.remove('is-open'));
 document.getElementById('siteProfileEdit').addEventListener('click',()=>{document.getElementById('siteProfileEditFields').style.display='block';document.getElementById('siteProfileMessage').textContent='';});
 document.getElementById('siteProfileSave').addEventListener('click',async()=>{
