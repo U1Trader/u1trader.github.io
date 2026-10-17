@@ -337,7 +337,7 @@ function setSiteUnlocked(user){
  document.body.classList.toggle('site-admin',isSiteAdmin(user));
  const meta=user?.user_metadata||{};
  document.getElementById('siteSidebarName').textContent=meta.full_name||user?.email||'U1Trader Member';
-  const profileLabel=meta.full_name||user?.email||'My Profile';
+  const profileLabel='My Profile';
   document.getElementById('siteTopProfileName').textContent=profileLabel;
   document.getElementById('siteTopProfileInitial').textContent=(profileLabel.trim()[0]||'U').toUpperCase();
  document.getElementById('siteSidebarEmail').textContent=user?.email||'';
@@ -364,7 +364,7 @@ function setSiteLocked(){
 async function showSiteProfile(){
  const {data:{user},error:userError}=await siteSupabase.auth.getUser();
  const msg=document.getElementById('siteProfileMessage');
- if(userError||!user){msg.textContent='Please log in again.';return}
+ if(userError||!user){siteAuthBack.classList.add('is-open');setSiteAuthMode('login');document.getElementById('siteAuthMessage').textContent='Please log in to view your profile.';return}
  const {data:profile,error}=await siteSupabase.from('user_profiles').select('full_name,phone,email').eq('id',user.id).maybeSingle();
  const p=profile||{};
  document.getElementById('siteProfileName').textContent=p.full_name||user.user_metadata?.full_name||'Not provided';
