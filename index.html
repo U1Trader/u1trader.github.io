@@ -57,6 +57,7 @@ body.competition-overlay-open{overflow:hidden}
 </div></div></section>
 <section id="competition"><div class="wrap"><div class="competition"><div><div class="eyebrow">U1Trader community challenge</div><h2>Enter the Competition</h2><p>Visit the live leaderboard, explore trader profiles, compare performance charts, and view trade history. Admin-only reporting and editing remain inside the competition dashboard.</p></div><a class="btn js-open-competition" href="#competition-app">Open Competition Dashboard ↗</a></div></div></section>
 </main><footer class="footer"><div class="wrap footerin"><span>© <span id="year"></span> U1Trader · Tharmesh</span><span>Trading involves risk. Payout examples are personal historical results, not guarantees of future performance.</span></div></footer><div class="toast" id="toast">Code copied</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>document.getElementById('year').textContent=new Date().getFullYear();const toast=document.getElementById('toast');document.querySelectorAll('[data-code]').forEach(b=>b.addEventListener('click',async()=>{const code=b.dataset.code;try{await navigator.clipboard.writeText(code)}catch(e){const t=document.createElement('textarea');t.value=code;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}toast.textContent='Copied: '+code;toast.style.display='block';setTimeout(()=>toast.style.display='none',1600)}));
 
 const siteSupabaseUrl='https://muwbkndrxyvgnblnikdh.supabase.co';
