@@ -318,10 +318,21 @@ siteSupabase.auth.onAuthStateChange((event,session)=>{
 
 const competitionOverlay=document.getElementById('competitionAppOverlay');
 const competitionFrame=document.getElementById('competitionAppFrame');
+async function sendMainSiteSessionToCompetition(){
+  if(!competitionFrame?.contentWindow)return;
+  const {data:{session},error}=await siteSupabase.auth.getSession();
+  if(error||!session)return;
+  competitionFrame.contentWindow.postMessage({type:'U1TRADER_PARENT_SESSION',session:{access_token:session.access_token,refresh_token:session.refresh_token}},window.location.origin);
+}
 function openCompetitionApp(event){
   if(event)event.preventDefault();
   if(!competitionOverlay||!competitionFrame)return;
-  if(!competitionFrame.src)competitionFrame.src='https://u1trader.github.io/U1trader-Competition/';
+  if(!competitionFrame.src){
+    competitionFrame.addEventListener('load',sendMainSiteSessionToCompetition);
+    competitionFrame.src='https://u1trader.github.io/U1trader-Competition/';
+  }else{
+    sendMainSiteSessionToCompetition();
+  }
   competitionOverlay.classList.add('is-open');
   competitionOverlay.setAttribute('aria-hidden','false');
   document.body.classList.add('competition-overlay-open');
