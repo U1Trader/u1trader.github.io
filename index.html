@@ -267,12 +267,23 @@ document.getElementById('siteAuthSubmit').addEventListener('click',async()=>{
   if(error){message.textContent=error.message;return}
   if(!data.session){message.textContent='Account created. Check your email to confirm, then return and log in.';setSiteAuthMode('login');return}
  }else{
+  // While maintenance is active, only the designated admin may sign in and bypass it.
+  if(siteMaintenanceEnabled && email.toLowerCase()!=='tharmesh2001@gmail.com'){
+   message.textContent='Maintenance mode is active. Only the site admin can sign in until maintenance is turned off.';
+   return;
+  }
   const {error}=await siteSupabase.auth.signInWithPassword({email,password});
   if(error){message.textContent=error.message;return}
  }
- message.textContent='Login successful.';
  const {data:{user}}=await siteSupabase.auth.getUser();
- if(user)setSiteUnlocked(user);
+ if(!user){message.textContent='Could not verify the signed-in account.';return}
+ if(siteMaintenanceEnabled && !isSiteAdmin(user)){
+  await siteSupabase.auth.signOut();
+  message.textContent='Access denied during maintenance. Please use the authorized admin account.';
+  return;
+ }
+ message.textContent='Login successful.';
+ setSiteUnlocked(user);
 
 });
 
