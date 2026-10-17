@@ -116,6 +116,19 @@ body.site-unlocked.site-sidebar-collapsed #siteSidebarToggle{left:12px!important
 }
 </style>
 
+<style id="top-nav-single-row-alignment">
+/* Keep existing horizontal positions; align the logo, nav links, menu toggle and profile on one row. */
+body.site-unlocked>header.nav .navin{height:46px!important;min-height:46px!important;display:flex!important;align-items:center!important;flex-wrap:nowrap!important}
+body.site-unlocked>header.nav .logo,body.site-unlocked>header.nav .navlinks{align-self:center!important;margin-top:0!important;margin-bottom:0!important;white-space:nowrap!important}
+body.site-unlocked>header.nav .navlinks{flex-direction:row!important;align-items:center!important}
+body.site-unlocked #siteSidebarToggle{top:8px!important}
+body.site-unlocked .site-top-profile{top:7px!important}
+@media(max-width:700px){
+ body.site-unlocked>header.nav .navin{height:46px!important;min-height:46px!important}
+ body.site-unlocked #siteSidebarToggle{top:10px!important}
+ body.site-unlocked .site-top-profile{top:7px!important}
+}
+</style>
 </head>
 <body>
 
