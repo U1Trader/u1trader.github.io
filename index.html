@@ -97,10 +97,10 @@ body.site-admin #siteMaintenanceToggle{display:flex}
 
 </style>
 <style id="real-site-sidebar-toggle-fix">
-#siteSidebarToggle{position:fixed!important;z-index:100002!important;left:205px!important;top:12px!important;display:none!important;visibility:visible!important;opacity:1!important;width:20px!important;height:20px!important;min-width:20px!important;padding:0!important;align-items:center!important;justify-content:center!important;gap:3px!important;border:0!important;border-radius:0!important;background:transparent!important;color:#aaa69b!important;box-shadow:none!important;cursor:pointer!important;transition:left .25s ease,color .2s ease!important}
+#siteSidebarToggle{position:fixed!important;z-index:100002!important;left:198px!important;top:12px!important;display:none!important;visibility:visible!important;opacity:1!important;width:30px!important;height:30px!important;min-width:30px!important;padding:0!important;align-items:center!important;justify-content:center!important;gap:3px!important;flex-direction:column!important;border:1px solid rgba(217,181,109,.24)!important;border-radius:8px!important;background:#11100d!important;color:#aaa69b!important;box-shadow:0 2px 8px #0003!important;cursor:pointer!important;transition:left .25s ease,color .2s ease,background .2s ease,border-color .2s ease!important}
 body.site-unlocked #siteSidebarToggle{display:flex!important}
-#siteSidebarToggle:hover{color:#f4dba2!important;background:transparent!important}
-#siteSidebarToggle{gap:3px!important;flex-direction:column!important}
+#siteSidebarToggle:hover{color:#f4dba2!important;background:#1b1812!important;border-color:rgba(217,181,109,.55)!important}
+#siteSidebarToggle:focus-visible{outline:2px solid #d9b56d!important;outline-offset:2px!important}
 #siteSidebarToggle span{display:block!important;position:relative!important;width:12px!important;height:2px!important;flex:0 0 2px!important;margin-left:5px!important;border-radius:999px!important;background:currentColor!important}
 #siteSidebarToggle span::before{content:""!important;position:absolute!important;left:-7px!important;top:-1px!important;width:4px!important;height:4px!important;border-radius:50%!important;background:currentColor!important}
 #siteSidebar{transition:transform .25s ease!important}
@@ -108,8 +108,8 @@ body.site-unlocked.site-sidebar-collapsed #siteSidebar{transform:translateX(-102
 body.site-unlocked.site-sidebar-collapsed>header.nav,body.site-unlocked.site-sidebar-collapsed>main,body.site-unlocked.site-sidebar-collapsed>footer{margin-left:0!important}
 body.site-unlocked.site-sidebar-collapsed #siteSidebarToggle{left:12px!important;color:#aaa69b!important}
 @media(max-width:700px){
- #siteSidebarToggle{left:39px!important;top:14px!important;width:18px!important;height:18px!important;min-width:18px!important}
- #siteSidebarToggle span{width:11px!important;height:2px!important;flex-basis:11px!important;margin-left:5px!important}
+ #siteSidebarToggle{left:34px!important;top:10px!important;width:26px!important;height:26px!important;min-width:26px!important}
+ #siteSidebarToggle span{width:11px!important;height:2px!important;flex-basis:2px!important;margin-left:5px!important}
  #siteSidebarToggle span::before{left:-7px!important;width:4px!important;height:4px!important;top:-1px!important}
  body.site-unlocked.site-sidebar-collapsed #siteSidebarToggle{left:12px!important}
  body.site-unlocked.site-sidebar-collapsed #siteSidebar{transform:translateX(-105%)!important}
