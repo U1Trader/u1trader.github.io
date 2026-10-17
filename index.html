@@ -119,7 +119,7 @@ body.site-unlocked.site-sidebar-collapsed #siteSidebarToggle{left:12px!important
 <style id="top-nav-single-row-alignment">
 /* One shared top row: sidebar logo, header, menu toggle and profile are all 48px tall,
    so the sidebar divider and the header divider sit on exactly the same line. */
-:root{--topbar-h:48px}
+:root{--topbar-h:96px}
 body.site-unlocked>header.nav{height:var(--topbar-h)!important;border-bottom:1px solid rgba(217,181,109,.24)!important}
 body.site-unlocked>header.nav .navin{height:calc(var(--topbar-h) - 1px)!important;min-height:0!important;display:flex!important;align-items:center!important;flex-wrap:nowrap!important;padding:0!important}
 body.site-unlocked>header.nav .logo,body.site-unlocked>header.nav .navlinks{align-self:center!important;margin:0!important;white-space:nowrap!important}
@@ -132,15 +132,15 @@ body.site-unlocked .site-sidebar-brand{height:var(--topbar-h)!important;box-sizi
 body.site-unlocked .site-sidebar-brand img{width:30px!important;height:30px!important}
 body.site-unlocked .site-sidebar-label{margin-top:18px!important}
 /* menu toggle + profile centred inside the 48px row */
-body.site-unlocked #siteSidebarToggle{top:9px!important}
-body.site-unlocked .site-top-profile{top:5px!important;padding:4px 12px 4px 4px!important}
+body.site-unlocked #siteSidebarToggle{top:calc((var(--topbar-h) - 30px)/2)!important}
+body.site-unlocked .site-top-profile{top:calc((var(--topbar-h) - 38px)/2)!important;padding:4px 12px 4px 4px!important}
 body.site-unlocked .site-top-profile-initial{width:28px!important;height:28px!important}
 @media(max-width:700px){
  body.site-unlocked>header.nav{padding-left:62px!important}
  body.site-unlocked .site-sidebar{padding:0 6px 14px!important}
  body.site-unlocked .site-sidebar-brand{margin:0 -6px!important;padding:0!important;justify-content:center!important}
- body.site-unlocked #siteSidebarToggle{top:11px!important}
- body.site-unlocked .site-top-profile{top:5px!important;right:8px!important;padding:3px!important}
+ body.site-unlocked #siteSidebarToggle{top:calc((var(--topbar-h) - 26px)/2)!important}
+ body.site-unlocked .site-top-profile{top:calc((var(--topbar-h) - 36px)/2)!important;right:8px!important;padding:3px!important}
  body.site-unlocked .site-top-profile-initial{width:30px!important;height:30px!important}
 }
 </style>
