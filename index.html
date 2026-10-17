@@ -20,12 +20,29 @@
 .competition-app-frame{display:block;flex:1 1 auto;width:100%;height:calc(100% - 48px);border:0;background:#0b1020}
 body.competition-overlay-open{overflow:hidden}
 
+
+/* Main-site login gate for Competition */
+.site-auth-back{display:none;position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:18px}
+.site-auth-back.is-open{display:flex}
+.site-auth-card{width:min(440px,100%);padding:28px;border:1px solid rgba(217,181,109,.35);border-radius:20px;background:linear-gradient(145deg,#17140e,#090909);box-shadow:0 25px 90px #000b}
+.site-auth-card h2{margin:8px 0 4px;font-size:1.8rem;line-height:1.2}
+.site-auth-card p{color:#bdb5a6;font-size:.92rem;margin:8px 0 18px}
+.site-auth-field{display:block;margin:12px 0;color:#e6dcc6;font-size:.86rem;font-weight:700}
+.site-auth-field input{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid rgba(217,181,109,.3);border-radius:9px;background:#080808;color:#fff;font:inherit;outline:none}
+.site-auth-field input:focus{border-color:#f4dba2}
+.site-auth-tabs{display:flex;gap:8px;margin:18px 0}
+.site-auth-tabs button{flex:1}
+.site-auth-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.site-auth-actions .btn{flex:1}
+.site-auth-message{min-height:22px;margin-top:12px;color:#f4dba2;font-size:.88rem;overflow-wrap:anywhere}
+.site-auth-close{background:#15130f;color:#f4dba2;border-color:rgba(217,181,109,.3)}
+
 </style>
 </head>
 <body>
-<header class="nav"><div class="wrap navin"><a class="logo" href="#home"><img class="brand-mark" src="u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="navlinks"><a href="#about">About</a><a href="#discounts">Discounts</a><a href="#payouts">Payout Gallery</a></nav><a class="btn" href="#competition-app" class="js-open-competition">Competition</a></div></header>
+<header class="nav"><div class="wrap navin"><a class="logo" href="#home"><img class="brand-mark" src="u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="navlinks"><a href="#about">About</a><a href="#discounts">Discounts</a><a href="#payouts">Payout Gallery</a></nav><a class="btn js-open-competition" href="#competition-app">Competition</a></div></header>
 <main>
-<section id="home" style="border-top:0;padding-top:0"><div class="wrap hero"><div><div class="eyebrow">Trading journey · Discipline · Growth</div><h1>Trade with<br><span>purpose.</span><br>Grow with intent.</h1><p>I'm Tharmesh — a full-time trader focused on XAUUSD (Gold), learning through every market phase, and building towards bigger goals. Welcome to my trading space.</p><div class="actions"><a class="btn" href="#competition-app" class="js-open-competition">🏆 Enter Competition</a><a class="btn secondary" href="#payouts">View Payout Gallery ↓</a></div><div class="tagrow"><span class="tag">8+ years trading experience</span><span class="tag">XAUUSD · Gold</span><span class="tag">Full-time trader</span></div></div><aside class="heroCard"><div><div class="eyebrow">U1Trader / Personal trading brand</div><h2 style="font-size:2rem;margin:14px 0 0">The journey<br>is far from over.</h2><div class="goldline"></div><p style="color:#c7c0b1;margin:0">From early losses to consistent progress — staying patient, improving the process, and helping the people around me.</p></div><div class="statgrid"><div class="stat"><strong>8+ Years</strong><small>Trading experience</small></div><div class="stat"><strong>~$30K</strong><small>Payouts shared by me</small></div></div></aside></div></section>
+<section id="home" style="border-top:0;padding-top:0"><div class="wrap hero"><div><div class="eyebrow">Trading journey · Discipline · Growth</div><h1>Trade with<br><span>purpose.</span><br>Grow with intent.</h1><p>I'm Tharmesh — a full-time trader focused on XAUUSD (Gold), learning through every market phase, and building towards bigger goals. Welcome to my trading space.</p><div class="actions"><a class="btn js-open-competition" href="#competition-app">🏆 Enter Competition</a><a class="btn secondary" href="#payouts">View Payout Gallery ↓</a></div><div class="tagrow"><span class="tag">8+ years trading experience</span><span class="tag">XAUUSD · Gold</span><span class="tag">Full-time trader</span></div></div><aside class="heroCard"><div><div class="eyebrow">U1Trader / Personal trading brand</div><h2 style="font-size:2rem;margin:14px 0 0">The journey<br>is far from over.</h2><div class="goldline"></div><p style="color:#c7c0b1;margin:0">From early losses to consistent progress — staying patient, improving the process, and helping the people around me.</p></div><div class="statgrid"><div class="stat"><strong>8+ Years</strong><small>Trading experience</small></div><div class="stat"><strong>~$30K</strong><small>Payouts shared by me</small></div></div></aside></div></section>
 <section id="about"><div class="wrap"><div class="sectionhead"><div><div class="eyebrow">A little about me</div><h2>My trading journey</h2></div><p>Every stage taught me something. The goal is bigger than a single trade.</p></div><div class="aboutgrid"><article class="card"><p class="quote">“This is just the beginning. The dream is much bigger.” ❤️‍🔥📈</p><p>I'm Tharmesh, and I have over 8 years of trading experience. I've tried almost every trading strategy, but Elliott Wave Theory is the one I haven't explored yet. My one and only favourite pair has always been XAUUSD (Gold).</p><p>When I started trading, I faced a lot of losses — around $4,000. Over the last 2 years, I've become consistently profitable and made around $30K in payouts.</p><p>Now I'm a full-time trader, working towards my biggest goals. One of my biggest motivations is supporting the people around me and helping them in any way I can.</p><div class="tagrow"><span class="tag">Patience</span><span class="tag">Consistency</span><span class="tag">Gold trader</span><span class="tag">Keep pushing</span></div></article><div class="socials"><div class="profile-photo-card"><img src="tharmesh-profile.png" alt="Tharmesh, U1Trader"><div class="profile-photo-caption"><strong>Tharmesh · U1Trader</strong><small>Full-time trader · XAUUSD / Gold</small></div></div><a class="social" href="https://www.instagram.com/u1trader/" target="_blank" rel="noopener"><div><b>Instagram</b><small>@u1trader · Follow the journey</small></div><span class="arrow">↗</span></a><a class="social" href="https://www.youtube.com/@U1Trader" target="_blank" rel="noopener"><div><b>YouTube</b><small>U1Trader · Videos and updates</small></div><span class="arrow">↗</span></a><a class="social" href="https://t.me/+yuDZAflJXXNmZmI1" target="_blank" rel="noopener"><div><b>Telegram Community</b><small>Join the U1Trader community</small></div><span class="arrow">↗</span></a><div class="card"><div class="eyebrow">My focus</div><h3 style="margin:8px 0">XAUUSD · Gold 🥇</h3><p style="margin:0">I keep learning, refining my process, and working towards long-term goals — one decision at a time.</p></div></div></div></div></section>
 <section id="discounts"><div class="wrap"><div class="sectionhead"><div><div class="eyebrow">Tools I use / partner links</div><h2>Discount codes</h2></div><p>Use the listed code on the provider's website where eligible. Check each provider's terms before purchasing.</p></div><div class="category">💰 CFD FUNDED ACCOUNTS</div><div class="discountgrid"><article class="discount"><h3>FundingPips</h3><p>CFD funded account</p><div class="code"><span>FC0F077A</span><button class="copy" data-code="FC0F077A">COPY</button></div><p style="margin:12px 0 0"><a href="https://app.fundingpips.com/register" target="_blank" rel="noopener" style="color:var(--gold2)">Visit FundingPips ↗</a></p></article><article class="discount"><h3>FundedNext</h3><p>CFD funded account</p><div class="code"><span>UTRADER</span><button class="copy" data-code="UTRADER">COPY</button></div><p style="margin:12px 0 0"><a href="https://fundednext.com/?fpr=UTRADER" target="_blank" rel="noopener" style="color:var(--gold2)">Visit FundedNext ↗</a></p></article><article class="discount"><h3>Blue Guardian</h3><p>CFD funded account</p><div class="code"><span>U1TRADER</span><button class="copy" data-code="U1TRADER">COPY</button></div><p style="margin:12px 0 0"><a href="https://blueguardian.com/?afmc=U1TRADER" target="_blank" rel="noopener" style="color:var(--gold2)">Visit Blue Guardian ↗</a></p></article></div><div class="category">📈 FUTURES FUNDED ACCOUNT</div><div class="discountgrid"><article class="discount"><h3>Blue Guardian</h3><p>Futures funded account</p><div class="code"><span>U1TRADER</span><button class="copy" data-code="U1TRADER">COPY</button></div><p style="margin:12px 0 0"><a href="https://blueguardian.com/?afmc=U1TRADER" target="_blank" rel="noopener" style="color:var(--gold2)">Visit Blue Guardian ↗</a></p></article></div><div class="category">💵 REAL TRADING ACCOUNT</div><div class="discountgrid"><article class="discount"><h3>XM</h3><p>Partner code</p><div class="code"><span>XD3WK</span><button class="copy" data-code="XD3WK">COPY</button></div><p style="margin:12px 0 0"><a href="https://affs.click/dhraw" target="_blank" rel="noopener" style="color:var(--gold2)">Visit XM ↗</a></p></article></div><div class="category">💳 REDOTPAY</div><div class="discountgrid"><article class="discount"><h3>Spend crypto like cash</h3><p>New users may be eligible for a $5 reward. Check offer terms.</p><a class="btn secondary" href="https://url.hk/i/en/zesfw" target="_blank" rel="noopener">Explore RedotPay ↗</a></article></div></div></section>
 <section id="payouts"><div class="wrap"><div class="sectionhead"><div><div class="eyebrow">Milestones & proof</div><h2>Payout gallery</h2></div><p>A collection of payout certificates and reward milestones shared from my trading journey. Tap a certificate to view it larger.</p></div><div class="gallery">
@@ -38,9 +55,58 @@ body.competition-overlay-open{overflow:hidden}
 <div class="cert"><a href="view.html?file=payout-certificate-2360.pdf"><img src="payout-certificate-2360-preview.jpg" alt="Preview of 2,360.19 payout certificate PDF"></a><div class="certlabel"><b>Payout Certificate · PDF</b><small>$2,360.19</small><br><a href="view.html?file=payout-certificate-2360.pdf">Open PDF ↗</a></div></div>
 <div class="cert"><a href="view.html?file=payout-certificate-3227.pdf"><img src="payout-certificate-3227-preview.jpg" alt="Preview of 3,227.72 payout certificate PDF"></a><div class="certlabel"><b>Payout Certificate · PDF</b><small>$3,227.72</small><br><a href="view.html?file=payout-certificate-3227.pdf">Open PDF ↗</a></div></div>
 </div></div></section>
-<section id="competition"><div class="wrap"><div class="competition"><div><div class="eyebrow">U1Trader community challenge</div><h2>Enter the Competition</h2><p>Visit the live leaderboard, explore trader profiles, compare performance charts, and view trade history. Admin-only reporting and editing remain inside the competition dashboard.</p></div><a class="btn" href="#competition-app" class="js-open-competition">Open Competition Dashboard ↗</a></div></div></section>
+<section id="competition"><div class="wrap"><div class="competition"><div><div class="eyebrow">U1Trader community challenge</div><h2>Enter the Competition</h2><p>Visit the live leaderboard, explore trader profiles, compare performance charts, and view trade history. Admin-only reporting and editing remain inside the competition dashboard.</p></div><a class="btn js-open-competition" href="#competition-app">Open Competition Dashboard ↗</a></div></div></section>
 </main><footer class="footer"><div class="wrap footerin"><span>© <span id="year"></span> U1Trader · Tharmesh</span><span>Trading involves risk. Payout examples are personal historical results, not guarantees of future performance.</span></div></footer><div class="toast" id="toast">Code copied</div>
 <script>document.getElementById('year').textContent=new Date().getFullYear();const toast=document.getElementById('toast');document.querySelectorAll('[data-code]').forEach(b=>b.addEventListener('click',async()=>{const code=b.dataset.code;try{await navigator.clipboard.writeText(code)}catch(e){const t=document.createElement('textarea');t.value=code;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}toast.textContent='Copied: '+code;toast.style.display='block';setTimeout(()=>toast.style.display='none',1600)}));
+
+const siteSupabaseUrl='https://muwbkndrxyvgnblnikdh.supabase.co';
+const siteSupabaseKey='sb_publishable_8xtYAX6736Bi6cg2N5_qOQ_WV_PRv5e';
+const siteSupabase=window.supabase.createClient(siteSupabaseUrl,siteSupabaseKey);
+let siteAuthMode='login';
+const siteAuthBack=document.getElementById('siteAuthBack');
+function setSiteAuthMode(mode){
+ siteAuthMode=mode;
+ document.getElementById('siteAuthTitle').textContent=mode==='register'?'Create your U1Trader account':'Login to continue';
+ document.getElementById('siteNameWrap').style.display=mode==='register'?'block':'none';
+ document.getElementById('sitePhoneWrap').style.display=mode==='register'?'block':'none';
+ document.getElementById('siteAuthPassword').autocomplete=mode==='register'?'new-password':'current-password';
+ document.getElementById('siteAuthSubmit').textContent=mode==='register'?'Create account':'Login';
+ document.getElementById('siteRegisterTab').className='btn '+(mode==='register'?'':'secondary');
+ document.getElementById('siteLoginTab').className='btn '+(mode==='login'?'':'secondary');
+ document.getElementById('siteAuthMessage').textContent='';
+}
+function openSiteAuth(event){
+ if(event)event.preventDefault();
+ setSiteAuthMode('login');
+ siteAuthBack.classList.add('is-open');
+ document.getElementById('siteAuthEmail').focus();
+}
+document.getElementById('siteRegisterTab').addEventListener('click',()=>setSiteAuthMode('register'));
+document.getElementById('siteLoginTab').addEventListener('click',()=>setSiteAuthMode('login'));
+document.getElementById('siteAuthCancel').addEventListener('click',()=>siteAuthBack.classList.remove('is-open'));
+document.querySelectorAll('.js-open-competition').forEach(link=>link.addEventListener('click',openSiteAuth));
+document.getElementById('siteAuthSubmit').addEventListener('click',async()=>{
+ const email=document.getElementById('siteAuthEmail').value.trim();
+ const password=document.getElementById('siteAuthPassword').value;
+ const message=document.getElementById('siteAuthMessage');
+ if(!email||!password){message.textContent='Enter your email and password.';return}
+ if(siteAuthMode==='register'){
+  const full_name=document.getElementById('siteAuthName').value.trim();
+  const phone=document.getElementById('siteAuthPhone').value.trim();
+  if(!full_name){message.textContent='Enter your full name.';return}
+  if(password.length<8){message.textContent='Password must be at least 8 characters.';return}
+  const {data,error}=await siteSupabase.auth.signUp({email,password,options:{data:{full_name,phone}}});
+  if(error){message.textContent=error.message;return}
+  if(!data.session){message.textContent='Account created. Check your email to confirm, then return and log in.';setSiteAuthMode('login');return}
+ }else{
+  const {error}=await siteSupabase.auth.signInWithPassword({email,password});
+  if(error){message.textContent=error.message;return}
+ }
+ message.textContent='Login successful. Opening Competition…';
+ siteAuthBack.classList.remove('is-open');
+ openCompetitionApp();
+});
+
 const competitionOverlay=document.getElementById('competitionAppOverlay');
 const competitionFrame=document.getElementById('competitionAppFrame');
 function openCompetitionApp(event){
@@ -62,6 +128,28 @@ document.getElementById('closeCompetitionApp')?.addEventListener('click',closeCo
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&competitionOverlay?.classList.contains('is-open'))closeCompetitionApp()});
 
 </script>
+
+
+<div class="site-auth-back" id="siteAuthBack" role="dialog" aria-modal="true" aria-labelledby="siteAuthTitle">
+ <div class="site-auth-card">
+  <div class="eyebrow">U1TRADER COMMUNITY</div>
+  <h2 id="siteAuthTitle">Login to continue</h2>
+  <p>Sign in or create your account here before opening the Competition welcome page.</p>
+  <div class="site-auth-tabs">
+   <button type="button" class="btn" id="siteRegisterTab">Register</button>
+   <button type="button" class="btn secondary" id="siteLoginTab">Login</button>
+  </div>
+  <label class="site-auth-field" id="siteNameWrap">Full name<input id="siteAuthName" type="text" autocomplete="name" maxlength="100" placeholder="Your name"></label>
+  <label class="site-auth-field" id="sitePhoneWrap">Phone number<input id="siteAuthPhone" type="tel" autocomplete="tel" maxlength="25" placeholder="Your phone number"></label>
+  <label class="site-auth-field">Email address<input id="siteAuthEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required></label>
+  <label class="site-auth-field">Password<input id="siteAuthPassword" type="password" autocomplete="current-password" minlength="8" placeholder="Password (at least 8 characters)" required></label>
+  <div class="site-auth-actions">
+   <button type="button" class="btn site-auth-close" id="siteAuthCancel">Cancel</button>
+   <button type="button" class="btn" id="siteAuthSubmit">Login</button>
+  </div>
+  <div class="site-auth-message" id="siteAuthMessage" role="status" aria-live="polite"></div>
+ </div>
+</div>
 
 <div class="competition-app-overlay" id="competitionAppOverlay" aria-hidden="true">
   <div class="competition-app-bar">
