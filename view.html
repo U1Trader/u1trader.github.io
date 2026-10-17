@@ -8,10 +8,22 @@
 <title>U1Trader | Payout</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}.topbar{min-height:48px;flex-shrink:0;display:flex;align-items:center;gap:12px;padding:7px 12px;background:#090909;border-bottom:1px solid #242424}.back{color:#f0cf78;text-decoration:none;font-size:14px;font-weight:700;padding:8px 10px;border:1px solid #51452b;border-radius:8px;white-space:nowrap}.title{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ddd}.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px;background:#000}.stage img{display:block;max-width:100%;max-height:calc(100dvh - 80px);width:auto;height:auto;object-fit:contain}.pdfwrap{width:100%;height:calc(100dvh - 70px);overflow:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#202124;padding:8px}.pdfwrap.multipage{justify-content:flex-start}.pdfwrap canvas{display:block;flex:0 0 auto;max-width:100%;height:auto!important;background:white;box-shadow:0 2px 12px #0008}.message{color:#ddd;text-align:center;padding:24px;line-height:1.6}.message a{color:#f0cf78}.error{color:#fff;text-align:center;padding:24px}
+
+.topbar{min-height:68px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:10px 24px;background:rgba(9,9,9,.96);border-bottom:1px solid rgba(217,181,109,.22)}
+.brand{display:flex;align-items:center;gap:9px;color:#f6f2e9;text-decoration:none;font-weight:900;letter-spacing:.1em;font-size:16px;white-space:nowrap}
+.brand img{width:34px;height:34px;object-fit:contain}.brand span span{color:#d9b56d}
+.site-nav{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;min-width:0;flex-wrap:wrap}
+.site-nav a{padding:8px 10px;color:#ddd4c2;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;transition:color .18s ease}
+.site-nav a:hover,.site-nav a:focus-visible{color:#e5bd32}
+.viewer-actions{display:flex;align-items:center;gap:12px;min-width:0}
+.title{max-width:200px}
+.back{color:#ddd4c2;text-decoration:none;font-size:13px;font-weight:600;padding:0;border:0;border-radius:0;white-space:nowrap}
+.back:hover{color:#e5bd32}
+@media(max-width:760px){.topbar{padding:10px 12px;gap:8px}.site-nav{order:3;flex:1 0 100%;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap}.site-nav a{padding:7px 9px}.viewer-actions{margin-left:auto}.title{max-width:110px;font-size:12px}}
 </style>
 </head>
 <body>
-<header class="topbar"><a class="back" href="./#payouts">← Back</a><div class="title" id="title">U1Trader Payout</div></header>
+<header class="topbar"><a class="brand" href="./#home" aria-label="U1Trader Home"><img src="./u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="./#home">Home</a><a href="https://u1trader.github.io/U1trader-Competition/competition.html">Competition</a><a href="./#giveaways">Giveaways</a><a href="./#contact">Contact</a><a href="./#about">About</a><a href="./#discounts">Discounts</a><a href="./#payouts">Payout Gallery</a></nav><div class="viewer-actions"><div class="title" id="title">U1Trader Payout</div><a class="back" href="./#payouts">← Back</a></div></header>
 <main class="stage" id="stage"><div class="message">Loading payout…</div></main>
 <script>
 const params=new URLSearchParams(location.search);
