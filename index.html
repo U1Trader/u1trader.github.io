@@ -71,6 +71,11 @@ body.site-unlocked .site-sidebar{display:flex;flex-direction:column}
  .site-sidebar-link .site-sidebar-icon{font-size:20px}
 }
 
+
+.site-forgot-link{display:block;margin:4px 0 0 auto;padding:4px 0;border:0;background:transparent;color:#f4dba2;text-decoration:underline;font:600 13px/1.4 Inter,system-ui,sans-serif;cursor:pointer}
+.site-reset-panel{display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(217,181,109,.2)}
+.site-reset-panel.is-open{display:block}
+
 </style>
 </head>
 <body>
@@ -88,6 +93,7 @@ body.site-unlocked .site-sidebar{display:flex;flex-direction:column}
   <div class="site-profile-row"><small>Full name</small><strong id="siteProfileName">—</strong></div>
   <div class="site-profile-row"><small>Phone number</small><strong id="siteProfilePhone">—</strong></div>
   <div class="site-profile-row"><small>Email address</small><strong id="siteProfileEmail">—</strong></div>
+  <button type="button" id="siteForgotPassword" class="site-forgot-link">Forgot password?</button>
   <div class="site-auth-actions"><button class="btn site-auth-close" type="button" id="siteProfileClose">Close</button><button class="btn" type="button" id="siteProfileEdit">Edit profile</button></div>
   <div class="site-auth-message" id="siteProfileMessage" role="status" aria-live="polite"></div>
   <div id="siteProfileEditFields" style="display:none">
@@ -133,6 +139,13 @@ body.site-unlocked .site-sidebar{display:flex;flex-direction:column}
    <button type="button" class="btn" id="siteAuthSubmit">Login</button>
   </div>
   <div class="site-auth-message" id="siteAuthMessage" role="status" aria-live="polite"></div>
+  <div class="site-reset-panel" id="siteResetPanel">
+   <p>Choose a new password for your account.</p>
+   <label class="site-auth-field">New password<input id="siteNewPassword" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters"></label>
+   <label class="site-auth-field">Confirm new password<input id="siteConfirmPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Enter it again"></label>
+   <button type="button" class="btn" id="siteSaveNewPassword">Update password</button>
+  </div>
+
  </div>
 </div>
 
@@ -169,6 +182,47 @@ function openSiteAuth(event){
  siteAuthBack.classList.add('is-open');
  document.getElementById('siteAuthEmail').focus();
 }
+
+function showPasswordResetForm(){
+ setSiteAuthMode('login');
+ document.getElementById('siteAuthTitle').textContent='Reset your password';
+ document.getElementById('siteNameWrap').style.display='none';
+ document.getElementById('sitePhoneWrap').style.display='none';
+ document.querySelector('.site-auth-tabs').style.display='none';
+ document.getElementById('siteAuthEmail').closest('label').style.display='none';
+ document.getElementById('siteAuthPassword').closest('label').style.display='none';
+ document.getElementById('siteForgotPassword').style.display='none';
+ document.querySelector('.site-auth-actions').style.display='none';
+ document.getElementById('siteResetPanel').classList.add('is-open');
+ document.getElementById('siteAuthMessage').textContent='Use a new password with at least 8 characters.';
+ siteAuthBack.classList.add('is-open');
+ document.getElementById('siteNewPassword').focus();
+}
+document.getElementById('siteForgotPassword').addEventListener('click',async()=>{
+ const email=document.getElementById('siteAuthEmail').value.trim();
+ const message=document.getElementById('siteAuthMessage');
+ if(!email){message.textContent='Enter your email address first, then click Forgot password.';document.getElementById('siteAuthEmail').focus();return}
+ const button=document.getElementById('siteForgotPassword');
+ button.disabled=true;message.textContent='Sending password reset email…';
+ const {error}=await siteSupabase.auth.resetPasswordForEmail(email,{redirectTo:'https://u1trader.github.io/'});
+ button.disabled=false;
+ if(error){message.textContent='Could not send reset email: '+error.message;return}
+ message.textContent='Password reset email sent. Open the email and follow its link to choose a new password.';
+});
+document.getElementById('siteSaveNewPassword').addEventListener('click',async()=>{
+ const password=document.getElementById('siteNewPassword').value;
+ const confirm=document.getElementById('siteConfirmPassword').value;
+ const message=document.getElementById('siteAuthMessage');
+ if(password.length<8){message.textContent='Password must be at least 8 characters.';return}
+ if(password!==confirm){message.textContent='The passwords do not match.';return}
+ const {data,error}=await siteSupabase.auth.updateUser({password});
+ if(error){message.textContent='Could not update password: '+error.message;return}
+ message.textContent='Password updated successfully.';
+ document.getElementById('siteResetPanel').classList.remove('is-open');
+ siteAuthBack.classList.remove('is-open');
+ if(data.user)setSiteUnlocked(data.user);
+});
+
 document.getElementById('siteRegisterTab').addEventListener('click',()=>setSiteAuthMode('register'));
 document.getElementById('siteLoginTab').addEventListener('click',()=>setSiteAuthMode('login'));
 document.getElementById('siteAuthCancel').addEventListener('click',()=>siteAuthBack.classList.remove('is-open'));
@@ -257,6 +311,7 @@ siteSupabase.auth.getSession().then(({data:{session}})=>{
  if(session?.user)setSiteUnlocked(session.user);else setSiteLocked();
 });
 siteSupabase.auth.onAuthStateChange((event,session)=>{
+ if(event==='PASSWORD_RECOVERY'){showPasswordResetForm();return}
  if(session?.user)setSiteUnlocked(session.user);
  else setSiteLocked();
 });
