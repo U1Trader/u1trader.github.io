@@ -378,8 +378,13 @@ siteSupabase.auth.getSession().then(({data:{session}})=>{
 });
 siteSupabase.auth.onAuthStateChange((event,session)=>{
  if(event==='PASSWORD_RECOVERY'){showPasswordResetForm();return}
- if(session?.user)setSiteUnlocked(session.user);
- else setSiteLocked();
+ if(session?.user){
+  setSiteUnlocked(session.user);
+  setTimeout(()=>sendMainSiteSessionToCompetition(),0);
+ }else{
+  setSiteLocked();
+  if(competitionFrame?.contentWindow)competitionFrame.contentWindow.postMessage({type:'U1TRADER_PARENT_SIGNED_OUT'},'https://u1trader.github.io');
+ }
 });
 
 const competitionOverlay=document.getElementById('competitionAppOverlay');
@@ -392,9 +397,14 @@ async function sendMainSiteSessionToCompetition(){
 }
 // The iframe can finish loading after the parent's first session message.
 // Let the child request the current session whenever it is ready.
-window.addEventListener('message',event=>{
-  if(event.origin!=='https://u1trader.github.io'||event.data?.type!=='U1TRADER_COMPETITION_READY')return;
-  sendMainSiteSessionToCompetition();
+window.addEventListener('message',async event=>{
+  if(event.origin!=='https://u1trader.github.io')return;
+  if(event.data?.type==='U1TRADER_COMPETITION_READY'){sendMainSiteSessionToCompetition();return;}
+  if(event.data?.type==='U1TRADER_LOGOUT_REQUEST'){
+    await siteSupabase.auth.signOut();
+    closeCompetitionApp();
+    setSiteLocked();
+  }
 });
 siteSupabase.auth.onAuthStateChange((event,session)=>{
   if(session?.user){
