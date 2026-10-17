@@ -387,8 +387,20 @@ async function sendMainSiteSessionToCompetition(){
   if(!competitionFrame?.contentWindow)return;
   const {data:{session},error}=await siteSupabase.auth.getSession();
   if(error||!session)return;
-  competitionFrame.contentWindow.postMessage({type:'U1TRADER_PARENT_SESSION',session:{access_token:session.access_token,refresh_token:session.refresh_token}},window.location.origin);
+  competitionFrame.contentWindow.postMessage({type:'U1TRADER_PARENT_SESSION',session:{access_token:session.access_token,refresh_token:session.refresh_token}},'https://u1trader.github.io');
 }
+// The iframe can finish loading after the parent's first session message.
+// Let the child request the current session whenever it is ready.
+window.addEventListener('message',event=>{
+  if(event.origin!=='https://u1trader.github.io'||event.data?.type!=='U1TRADER_COMPETITION_READY')return;
+  sendMainSiteSessionToCompetition();
+});
+siteSupabase.auth.onAuthStateChange((event,session)=>{
+  if(session?.user){
+    // Update the iframe session after login/refresh, not only on first load.
+    setTimeout(()=>sendMainSiteSessionToCompetition(),0);
+  }
+});
 function openCompetitionApp(event){
   if(event)event.preventDefault();
   if(!competitionOverlay||!competitionFrame)return;
