@@ -37,9 +37,67 @@ body.competition-overlay-open{overflow:hidden}
 .site-auth-message{min-height:22px;margin-top:12px;color:#f4dba2;font-size:.88rem;overflow-wrap:anywhere}
 .site-auth-close{background:#15130f;color:#f4dba2;border-color:rgba(217,181,109,.3)}
 
+
+/* Signed-in site shell: login is the gate for the whole website */
+body.site-locked>header,body.site-locked>main,body.site-locked>footer,body.site-locked>#toast{display:none!important}
+body.site-locked{overflow:hidden}
+body.site-unlocked>header.nav{margin-left:236px}
+body.site-unlocked>main,body.site-unlocked>footer{margin-left:236px}
+.site-sidebar{display:none;position:fixed;z-index:1000;left:0;top:0;bottom:0;width:236px;padding:22px 14px;background:linear-gradient(180deg,#11100d,#080808);border-right:1px solid rgba(217,181,109,.24)}
+body.site-unlocked .site-sidebar{display:flex;flex-direction:column}
+.site-sidebar-brand{display:flex;align-items:center;gap:10px;padding:8px 9px 22px;border-bottom:1px solid rgba(217,181,109,.2);font-weight:900;letter-spacing:.1em}
+.site-sidebar-brand img{width:32px;height:32px;object-fit:contain;border-radius:50%}
+.site-sidebar-brand span span{color:#d9b56d}
+.site-sidebar-label{margin:22px 10px 8px;color:#9d9584;font-size:10px;letter-spacing:.2em;font-weight:800}
+.site-sidebar-link{display:flex;align-items:center;gap:12px;width:100%;padding:13px 12px;margin:4px 0;border:1px solid transparent;border-radius:10px;background:transparent;color:#ddd4c2;font:600 14px/1.3 Inter,system-ui,sans-serif;text-align:left;cursor:pointer}
+.site-sidebar-link:hover,.site-sidebar-link.active{background:#d9b56d16;border-color:#d9b56d3b;color:#f4dba2}
+.site-sidebar-link .site-sidebar-icon{width:22px;text-align:center;font-size:17px}
+.site-sidebar-user{margin-top:auto;padding:14px 10px 4px;border-top:1px solid rgba(217,181,109,.2);color:#aaa69b;font-size:12px;overflow-wrap:anywhere}
+.site-sidebar-user strong{display:block;color:#f6f2e9;font-size:13px;margin-bottom:3px}
+.site-profile-back{display:none;position:fixed;inset:0;z-index:100001;background:rgba(0,0,0,.86);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:18px}
+.site-profile-back.is-open{display:flex}
+.site-profile-card{width:min(460px,100%);padding:26px;border:1px solid rgba(217,181,109,.35);border-radius:18px;background:linear-gradient(145deg,#17140e,#090909);box-shadow:0 25px 90px #000b}
+.site-profile-row{margin:12px 0;padding:12px;border:1px solid rgba(217,181,109,.2);border-radius:9px;background:#080808}
+.site-profile-row small{display:block;color:#aaa69b;font-size:11px;margin-bottom:3px}
+.site-profile-row strong{overflow-wrap:anywhere}
+@media(max-width:700px){
+ body.site-unlocked>header.nav{margin-left:0;padding-left:62px}
+ body.site-unlocked>main,body.site-unlocked>footer{margin-left:0}
+ .site-sidebar{width:62px;padding:14px 6px}
+ .site-sidebar-brand{justify-content:center;padding:8px 0 18px}
+ .site-sidebar-brand img{width:34px;height:34px}
+ .site-sidebar-brand .site-sidebar-word,.site-sidebar-label,.site-sidebar-link .site-sidebar-text,.site-sidebar-user{display:none}
+ .site-sidebar-link{justify-content:center;padding:13px 5px;font-size:0}
+ .site-sidebar-link .site-sidebar-icon{font-size:20px}
+}
+
 </style>
 </head>
 <body>
+
+<aside class="site-sidebar" id="siteSidebar" aria-label="Main navigation">
+ <a class="site-sidebar-brand" href="#" id="siteBrandHome"><img src="u1trader-logo-mark.jpg" alt=""><span class="site-sidebar-word">U1<span>TRADER</span></span></a>
+ <div class="site-sidebar-label">MENU</div>
+ <button class="site-sidebar-link" id="siteMyProfileBtn" type="button"><span class="site-sidebar-icon">👤</span><span class="site-sidebar-text">My Profile</span></button>
+ <button class="site-sidebar-link" id="siteCompetitionBtn" type="button"><span class="site-sidebar-icon">🏆</span><span class="site-sidebar-text">Competition</span></button>
+ <div class="site-sidebar-user"><strong id="siteSidebarName">U1Trader Member</strong><span id="siteSidebarEmail"></span><button class="site-sidebar-link" id="siteLogoutBtn" type="button" style="margin-top:12px"><span class="site-sidebar-icon">↪</span><span class="site-sidebar-text">Logout</span></button></div>
+</aside>
+<div class="site-profile-back" id="siteProfileBack" role="dialog" aria-modal="true" aria-labelledby="siteProfileTitle">
+ <div class="site-profile-card">
+  <div class="eyebrow">ACCOUNT</div><h2 id="siteProfileTitle">My Profile</h2>
+  <div class="site-profile-row"><small>Full name</small><strong id="siteProfileName">—</strong></div>
+  <div class="site-profile-row"><small>Phone number</small><strong id="siteProfilePhone">—</strong></div>
+  <div class="site-profile-row"><small>Email address</small><strong id="siteProfileEmail">—</strong></div>
+  <div class="site-auth-actions"><button class="btn site-auth-close" type="button" id="siteProfileClose">Close</button><button class="btn" type="button" id="siteProfileEdit">Edit profile</button></div>
+  <div class="site-auth-message" id="siteProfileMessage" role="status" aria-live="polite"></div>
+  <div id="siteProfileEditFields" style="display:none">
+   <label class="site-auth-field">Full name<input id="siteEditName" maxlength="100"></label>
+   <label class="site-auth-field">Phone number<input id="siteEditPhone" maxlength="25"></label>
+   <button class="btn" id="siteProfileSave" type="button">Save profile</button>
+  </div>
+ </div>
+</div>
+
 <header class="nav"><div class="wrap navin"><a class="logo" href="#home"><img class="brand-mark" src="u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="navlinks"><a href="#about">About</a><a href="#discounts">Discounts</a><a href="#payouts">Payout Gallery</a></nav><a class="btn js-open-competition" href="#competition-app">Competition</a></div></header>
 <main>
 <section id="home" style="border-top:0;padding-top:0"><div class="wrap hero"><div><div class="eyebrow">Trading journey · Discipline · Growth</div><h1>Trade with<br><span>purpose.</span><br>Grow with intent.</h1><p>I'm Tharmesh — a full-time trader focused on XAUUSD (Gold), learning through every market phase, and building towards bigger goals. Welcome to my trading space.</p><div class="actions"><a class="btn js-open-competition" href="#competition-app">🏆 Enter Competition</a><a class="btn secondary" href="#payouts">View Payout Gallery ↓</a></div><div class="tagrow"><span class="tag">8+ years trading experience</span><span class="tag">XAUUSD · Gold</span><span class="tag">Full-time trader</span></div></div><aside class="heroCard"><div><div class="eyebrow">U1Trader / Personal trading brand</div><h2 style="font-size:2rem;margin:14px 0 0">The journey<br>is far from over.</h2><div class="goldline"></div><p style="color:#c7c0b1;margin:0">From early losses to consistent progress — staying patient, improving the process, and helping the people around me.</p></div><div class="statgrid"><div class="stat"><strong>8+ Years</strong><small>Trading experience</small></div><div class="stat"><strong>~$30K</strong><small>Payouts shared by me</small></div></div></aside></div></section>
@@ -103,9 +161,75 @@ document.getElementById('siteAuthSubmit').addEventListener('click',async()=>{
   const {error}=await siteSupabase.auth.signInWithPassword({email,password});
   if(error){message.textContent=error.message;return}
  }
- message.textContent='Login successful. Opening Competition…';
+ message.textContent='Login successful.';
+ const {data:{user}}=await siteSupabase.auth.getUser();
+ if(user)setSiteUnlocked(user);
+
+});
+
+
+function setSiteUnlocked(user){
+ document.body.classList.remove('site-locked');
+ document.body.classList.add('site-unlocked');
+ const meta=user?.user_metadata||{};
+ document.getElementById('siteSidebarName').textContent=meta.full_name||user?.email||'U1Trader Member';
+ document.getElementById('siteSidebarEmail').textContent=user?.email||'';
  siteAuthBack.classList.remove('is-open');
+}
+function setSiteLocked(){
+ document.body.classList.add('site-locked');
+ document.body.classList.remove('site-unlocked');
+ siteAuthBack.classList.add('is-open');
+ setSiteAuthMode('login');
+ document.getElementById('siteAuthCancel').style.display='none';
+}
+async function showSiteProfile(){
+ const {data:{user},error:userError}=await siteSupabase.auth.getUser();
+ const msg=document.getElementById('siteProfileMessage');
+ if(userError||!user){msg.textContent='Please log in again.';return}
+ const {data:profile,error}=await siteSupabase.from('user_profiles').select('full_name,phone,email').eq('id',user.id).maybeSingle();
+ const p=profile||{};
+ document.getElementById('siteProfileName').textContent=p.full_name||user.user_metadata?.full_name||'Not provided';
+ document.getElementById('siteProfilePhone').textContent=p.phone||user.user_metadata?.phone||'Not provided';
+ document.getElementById('siteProfileEmail').textContent=p.email||user.email||'Not provided';
+ document.getElementById('siteEditName').value=p.full_name||user.user_metadata?.full_name||'';
+ document.getElementById('siteEditPhone').value=p.phone||user.user_metadata?.phone||'';
+ document.getElementById('siteProfileMessage').textContent=error?'Profile details loaded from your account; profile table may need setup.':'';
+ document.getElementById('siteProfileEditFields').style.display='none';
+ document.getElementById('siteProfileBack').classList.add('is-open');
+}
+document.getElementById('siteMyProfileBtn').addEventListener('click',showSiteProfile);
+document.getElementById('siteProfileClose').addEventListener('click',()=>document.getElementById('siteProfileBack').classList.remove('is-open'));
+document.getElementById('siteProfileEdit').addEventListener('click',()=>{document.getElementById('siteProfileEditFields').style.display='block';document.getElementById('siteProfileMessage').textContent='';});
+document.getElementById('siteProfileSave').addEventListener('click',async()=>{
+ const {data:{user}}=await siteSupabase.auth.getUser();if(!user)return;
+ const full_name=document.getElementById('siteEditName').value.trim();
+ const phone=document.getElementById('siteEditPhone').value.trim();
+ const msg=document.getElementById('siteProfileMessage');
+ if(!full_name){msg.textContent='Please enter your full name.';return}
+ const {error}=await siteSupabase.from('user_profiles').upsert({id:user.id,full_name,phone,email:user.email,updated_at:new Date().toISOString()},{onConflict:'id'});
+ if(error){msg.textContent='Could not save profile: '+error.message;return}
+ await siteSupabase.auth.updateUser({data:{full_name,phone}});
+ document.getElementById('siteProfileName').textContent=full_name;
+ document.getElementById('siteProfilePhone').textContent=phone||'Not provided';
+ document.getElementById('siteSidebarName').textContent=full_name;
+ document.getElementById('siteProfileEditFields').style.display='none';
+ msg.textContent='Profile updated.';
+});
+document.getElementById('siteCompetitionBtn').addEventListener('click',()=>{
+ document.getElementById('siteCompetitionBtn').classList.add('active');
  openCompetitionApp();
+});
+document.getElementById('siteBrandHome').addEventListener('click',e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})});
+document.getElementById('siteLogoutBtn').addEventListener('click',async()=>{
+ await siteSupabase.auth.signOut();closeCompetitionApp();setSiteLocked();
+});
+siteSupabase.auth.getSession().then(({data:{session}})=>{
+ if(session?.user)setSiteUnlocked(session.user);else setSiteLocked();
+});
+siteSupabase.auth.onAuthStateChange((event,session)=>{
+ if(session?.user)setSiteUnlocked(session.user);
+ else setSiteLocked();
 });
 
 const competitionOverlay=document.getElementById('competitionAppOverlay');
