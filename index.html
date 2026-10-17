@@ -153,6 +153,7 @@ body.site-unlocked>main{border-top:0!important}
 .competition-app-bar{display:none!important}
 .competition-app-frame{height:100%!important}
 @media(max-width:700px){body.site-unlocked #siteSidebarToggle{left:70px!important}}
+body.competition-overlay-open #siteSidebarToggle,body.competition-overlay-open .site-top-profile{display:none!important}
 </style>
 </head>
 <body>
@@ -242,10 +243,6 @@ body.site-unlocked>main{border-top:0!important}
 </div>
 
 <div class="competition-app-overlay" id="competitionAppOverlay" aria-hidden="true">
-  <div class="competition-app-bar">
-    <span>U1TRADER · Competition</span>
-    <button class="competition-app-close" id="closeCompetitionApp" type="button" aria-label="Close competition and return to U1Trader home">✕ Back to U1Trader</button>
-  </div>
   <iframe class="competition-app-frame" id="competitionAppFrame" title="U1Trader Competition login, welcome page and dashboard" loading="lazy"></iframe>
 </div>
 
