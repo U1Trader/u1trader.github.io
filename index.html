@@ -97,16 +97,17 @@ body.site-admin #siteMaintenanceToggle{display:flex}
 
 </style>
 <style id="real-site-sidebar-toggle-fix">
-#siteSidebarToggle{position:fixed!important;z-index:100002!important;left:205px!important;top:12px!important;display:none!important;visibility:visible!important;opacity:1!important;width:20px!important;height:20px!important;min-width:20px!important;padding:0!important;align-items:center!important;justify-content:center!important;gap:2px!important;border:0!important;border-radius:0!important;background:transparent!important;color:#aaa69b!important;box-shadow:none!important;cursor:pointer!important;transition:left .25s ease,color .2s ease!important}
+#siteSidebarToggle{position:fixed!important;z-index:100002!important;left:205px!important;top:12px!important;display:none!important;visibility:visible!important;opacity:1!important;width:20px!important;height:20px!important;min-width:20px!important;padding:0!important;align-items:center!important;justify-content:center!important;gap:3px!important;border:0!important;border-radius:0!important;background:transparent!important;color:#aaa69b!important;box-shadow:none!important;cursor:pointer!important;transition:left .25s ease,color .2s ease!important}
 body.site-unlocked #siteSidebarToggle{display:flex!important}
 #siteSidebarToggle:hover{color:#f4dba2!important;background:transparent!important}
-#siteSidebarToggle span{display:block!important;width:2px!important;height:2px!important;flex:0 0 2px!important;border-radius:50%!important;background:currentColor!important}
+#siteSidebarToggle span{display:block!important;width:16px!important;height:2px!important;flex:0 0 16px!important;border-radius:999px!important;background:currentColor!important}
 #siteSidebar{transition:transform .25s ease!important}
 body.site-unlocked.site-sidebar-collapsed #siteSidebar{transform:translateX(-102%)!important}
 body.site-unlocked.site-sidebar-collapsed>header.nav,body.site-unlocked.site-sidebar-collapsed>main,body.site-unlocked.site-sidebar-collapsed>footer{margin-left:0!important}
 body.site-unlocked.site-sidebar-collapsed #siteSidebarToggle{left:12px!important;color:#aaa69b!important}
 @media(max-width:700px){
  #siteSidebarToggle{left:39px!important;top:14px!important;width:18px!important;height:18px!important;min-width:18px!important}
+ #siteSidebarToggle span{width:14px!important;height:2px!important;flex-basis:14px!important}
  body.site-unlocked.site-sidebar-collapsed #siteSidebarToggle{left:12px!important}
  body.site-unlocked.site-sidebar-collapsed #siteSidebar{transform:translateX(-105%)!important}
 }
