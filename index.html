@@ -76,6 +76,20 @@ body.site-unlocked .site-sidebar{display:flex;flex-direction:column}
 .site-reset-panel{display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(217,181,109,.2)}
 .site-reset-panel.is-open{display:block}
 
+
+/* Global maintenance mode */
+#siteMaintenanceScreen{display:none;position:fixed;inset:0;z-index:200000;background:#090909;color:#f5f5f5;align-items:center;justify-content:center;text-align:center;padding:24px;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+#siteMaintenanceScreen.is-visible{display:flex}
+#siteMaintenanceScreen .maintenance-inner{width:min(560px,100%)}
+#siteMaintenanceScreen .maintenance-icon{width:64px;height:64px;border:1px solid #3b3320;border-radius:50%;display:grid;place-items:center;margin:0 auto 30px;color:#e6bd32;font-size:28px}
+#siteMaintenanceScreen .maintenance-brand{font-size:12px;letter-spacing:4px;font-weight:900;color:#e6bd32;margin-bottom:14px}
+#siteMaintenanceScreen h1{font-size:clamp(32px,6vw,48px);line-height:1.12;letter-spacing:-1.5px;margin:0 0 16px}
+#siteMaintenanceScreen h1 span{color:#e6bd32}
+#siteMaintenanceScreen p{color:#aaa69b;font-size:16px;line-height:1.65;margin:0 auto;max-width:460px}
+#siteMaintenanceScreen .maintenance-admin{display:none;margin-top:22px;color:#777;font-size:11px;letter-spacing:2px}
+#siteMaintenanceToggle{display:none}
+body.site-admin #siteMaintenanceToggle{display:flex}
+
 </style>
 </head>
 <body>
@@ -85,8 +99,18 @@ body.site-unlocked .site-sidebar{display:flex;flex-direction:column}
  <div class="site-sidebar-label">MENU</div>
  <button class="site-sidebar-link" id="siteMyProfileBtn" type="button"><span class="site-sidebar-icon">👤</span><span class="site-sidebar-text">My Profile</span></button>
  <button class="site-sidebar-link" id="siteCompetitionBtn" type="button"><span class="site-sidebar-icon">🏆</span><span class="site-sidebar-text">Competition</span></button>
- <div class="site-sidebar-user"><strong id="siteSidebarName">U1Trader Member</strong><span id="siteSidebarEmail"></span><button class="site-sidebar-link" id="siteLogoutBtn" type="button" style="margin-top:12px"><span class="site-sidebar-icon">↪</span><span class="site-sidebar-text">Logout</span></button></div>
+ <div class="site-sidebar-user"><strong id="siteSidebarName">U1Trader Member</strong><span id="siteSidebarEmail"></span><button class="site-sidebar-link" id="siteMaintenanceToggle" type="button"><span class="site-sidebar-icon">🛠</span><span class="site-sidebar-text">Maintenance: OFF</span></button><button class="site-sidebar-link" id="siteLogoutBtn" type="button" style="margin-top:12px"><span class="site-sidebar-icon">↪</span><span class="site-sidebar-text">Logout</span></button></div>
 </aside>
+<div id="siteMaintenanceScreen" aria-live="polite" role="status">
+ <div class="maintenance-inner">
+  <div class="maintenance-icon" aria-hidden="true">⚒</div>
+  <div class="maintenance-brand">U1TRADER</div>
+  <h1>We'll be back <span>soon.</span></h1>
+  <p>The website is temporarily closed for maintenance. All giveaways, payout proof and partner deals will return shortly.</p>
+  <div class="maintenance-admin">ADMIN PREVIEW BYPASS ACTIVE</div>
+ </div>
+</div>
+
 <div class="site-profile-back" id="siteProfileBack" role="dialog" aria-modal="true" aria-labelledby="siteProfileTitle">
  <div class="site-profile-card">
   <div class="eyebrow">ACCOUNT</div><h2 id="siteProfileTitle">My Profile</h2>
@@ -251,13 +275,52 @@ document.getElementById('siteAuthSubmit').addEventListener('click',async()=>{
 });
 
 
+function isSiteAdmin(user){
+ const meta=user?.app_metadata||{};
+ return String(user?.email||'').trim().toLowerCase()==='tharmesh2001@gmail.com'&&(meta.role==='admin'||(Array.isArray(meta.roles)&&meta.roles.includes('admin')));
+}
+let siteMaintenanceEnabled=false,siteMaintenanceLoaded=false;
+function renderMaintenanceMode(){
+ const userEmail=document.getElementById('siteSidebarEmail')?.textContent||'';
+ const admin=document.body.classList.contains('site-admin');
+ const screen=document.getElementById('siteMaintenanceScreen');
+ if(screen)screen.classList.toggle('is-visible',siteMaintenanceEnabled&&!admin);
+ const toggle=document.getElementById('siteMaintenanceToggle');
+ if(toggle){toggle.querySelector('.site-sidebar-text').textContent='Maintenance: '+(siteMaintenanceEnabled?'ON':'OFF');toggle.classList.toggle('active',siteMaintenanceEnabled);}
+}
+async function refreshMaintenanceMode(){
+ try{
+  const {data:row,error}=await siteSupabase.from('competition_dashboard').select('dashboard_data').eq('id',1).maybeSingle();
+  if(error)throw error;
+  siteMaintenanceEnabled=!!row?.dashboard_data?.siteMaintenanceEnabled;
+  siteMaintenanceLoaded=true;renderMaintenanceMode();
+ }catch(error){console.warn('Maintenance status could not be loaded:',error.message);}
+}
+async function setMaintenanceMode(next){
+ const {data:{user}}=await siteSupabase.auth.getUser();
+ if(!isSiteAdmin(user)){alert('Only the website admin can change maintenance mode.');return;}
+ const button=document.getElementById('siteMaintenanceToggle');
+ if(button)button.disabled=true;
+ try{
+  const {data:row,error:readError}=await siteSupabase.from('competition_dashboard').select('dashboard_data').eq('id',1).maybeSingle();
+  if(readError)throw readError;
+  if(!row?.dashboard_data)throw new Error('Competition settings row is unavailable.');
+  const nextData={...row.dashboard_data,siteMaintenanceEnabled:!!next};
+  const {error}=await siteSupabase.from('competition_dashboard').update({dashboard_data:nextData}).eq('id',1);
+  if(error)throw error;
+  siteMaintenanceEnabled=!!next;siteMaintenanceLoaded=true;renderMaintenanceMode();
+ }catch(error){alert('Could not update maintenance mode: '+String(error.message||error));}
+ finally{if(button)button.disabled=false;}
+}
 function setSiteUnlocked(user){
  document.body.classList.remove('site-locked');
  document.body.classList.add('site-unlocked');
+ document.body.classList.toggle('site-admin',isSiteAdmin(user));
  const meta=user?.user_metadata||{};
  document.getElementById('siteSidebarName').textContent=meta.full_name||user?.email||'U1Trader Member';
  document.getElementById('siteSidebarEmail').textContent=user?.email||'';
  siteAuthBack.classList.remove('is-open');
+ renderMaintenanceMode();
 }
 function setSiteLocked(){
  document.body.classList.add('site-locked');
@@ -281,6 +344,7 @@ async function showSiteProfile(){
  document.getElementById('siteProfileEditFields').style.display='none';
  document.getElementById('siteProfileBack').classList.add('is-open');
 }
+document.getElementById('siteMaintenanceToggle').addEventListener('click',()=>setMaintenanceMode(!siteMaintenanceEnabled));
 document.getElementById('siteMyProfileBtn').addEventListener('click',showSiteProfile);
 document.getElementById('siteProfileClose').addEventListener('click',()=>document.getElementById('siteProfileBack').classList.remove('is-open'));
 document.getElementById('siteProfileEdit').addEventListener('click',()=>{document.getElementById('siteProfileEditFields').style.display='block';document.getElementById('siteProfileMessage').textContent='';});
@@ -307,6 +371,7 @@ document.getElementById('siteBrandHome').addEventListener('click',e=>{e.preventD
 document.getElementById('siteLogoutBtn').addEventListener('click',async()=>{
  await siteSupabase.auth.signOut();closeCompetitionApp();setSiteLocked();
 });
+refreshMaintenanceMode();setInterval(refreshMaintenanceMode,10000);
 siteSupabase.auth.getSession().then(({data:{session}})=>{
  if(session?.user)setSiteUnlocked(session.user);else setSiteLocked();
 });
