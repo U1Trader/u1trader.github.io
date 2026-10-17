@@ -250,7 +250,8 @@ document.getElementById('siteSaveNewPassword').addEventListener('click',async()=
 document.getElementById('siteRegisterTab').addEventListener('click',()=>setSiteAuthMode('register'));
 document.getElementById('siteLoginTab').addEventListener('click',()=>setSiteAuthMode('login'));
 document.getElementById('siteAuthCancel').addEventListener('click',()=>siteAuthBack.classList.remove('is-open'));
-document.querySelectorAll('.js-open-competition').forEach(link=>link.addEventListener('click',openSiteAuth));
+// Competition buttons are handled by the authenticated gate below; do not attach
+// a second unconditional login handler (that caused the duplicate login prompt).
 document.getElementById('siteAuthSubmit').addEventListener('click',async()=>{
  const email=document.getElementById('siteAuthEmail').value.trim();
  const password=document.getElementById('siteAuthPassword').value;
