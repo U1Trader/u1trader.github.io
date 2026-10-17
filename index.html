@@ -473,7 +473,12 @@ document.getElementById('siteLogoutBtn').addEventListener('click',async()=>{
 });
 refreshMaintenanceMode();setInterval(refreshMaintenanceMode,10000);
 siteSupabase.auth.getSession().then(({data:{session}})=>{
- if(session?.user)setSiteUnlocked(session.user);else setSiteLocked();
+ if(session?.user){
+  setSiteUnlocked(session.user);
+  // Page refreshed while the competition was open: reopen it where it was.
+  let wasOpen=false;try{wasOpen=sessionStorage.getItem('u1traderCompOpen')==='1'}catch(e){}
+  if(wasOpen)openCompetitionApp(null,true);
+ }else setSiteLocked();
 });
 siteSupabase.auth.onAuthStateChange((event,session)=>{
  if(event==='PASSWORD_RECOVERY'){showPasswordResetForm();return}
@@ -519,8 +524,13 @@ siteSupabase.auth.onAuthStateChange((event,session)=>{
     setTimeout(()=>sendMainSiteSessionToCompetition(),0);
   }
 });
-function openCompetitionApp(event){
-  if(event)event.preventDefault();
+function openCompetitionApp(event,restore){
+  if(event&&event.preventDefault)event.preventDefault();
+  try{
+    sessionStorage.setItem('u1traderCompOpen','1');
+    // A fresh click always starts on the competitions list; only a page refresh restores the old spot.
+    if(!restore){sessionStorage.removeItem('u1traderCompView');sessionStorage.removeItem('u1traderCompetitionScrollY');}
+  }catch(e){}
   if(!competitionOverlay||!competitionFrame)return;
   if(!competitionFrame.src){
     competitionFrame.addEventListener('load',sendMainSiteSessionToCompetition);
@@ -528,7 +538,7 @@ function openCompetitionApp(event){
   }else{
     sendMainSiteSessionToCompetition();
     // Re-opening from the main page always starts on the competitions list.
-    competitionFrame.contentWindow?.postMessage({type:'U1TRADER_OPEN_HUB'},'https://u1trader.github.io');
+    if(!restore)competitionFrame.contentWindow?.postMessage({type:'U1TRADER_OPEN_HUB'},'https://u1trader.github.io');
   }
   competitionOverlay.classList.add('is-open');
   competitionOverlay.setAttribute('aria-hidden','false');
@@ -536,6 +546,7 @@ function openCompetitionApp(event){
   document.getElementById('closeCompetitionApp')?.focus();
 }
 function closeCompetitionApp(){
+  try{sessionStorage.removeItem('u1traderCompOpen');sessionStorage.removeItem('u1traderCompView');}catch(e){}
   competitionOverlay?.classList.remove('is-open');
   competitionOverlay?.setAttribute('aria-hidden','true');
   document.body.classList.remove('competition-overlay-open');
