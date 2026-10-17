@@ -204,6 +204,7 @@ function setSiteAuthMode(mode){
  document.getElementById('sitePhoneWrap').style.display=mode==='register'?'block':'none';
  document.getElementById('siteAuthPassword').autocomplete=mode==='register'?'new-password':'current-password';
  document.getElementById('siteAuthSubmit').textContent=mode==='register'?'Create account':'Login';
+ document.getElementById('siteForgotPassword').style.display=mode==='login'?'block':'none';
  document.getElementById('siteRegisterTab').className='btn '+(mode==='register'?'':'secondary');
  document.getElementById('siteLoginTab').className='btn '+(mode==='login'?'':'secondary');
  document.getElementById('siteAuthMessage').textContent='';
