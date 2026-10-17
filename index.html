@@ -101,7 +101,7 @@ body.site-admin #siteMaintenanceToggle{display:flex}
  <button class="site-sidebar-link" id="siteCompetitionBtn" type="button"><span class="site-sidebar-icon">🏆</span><span class="site-sidebar-text">Competition</span></button>
  <div class="site-sidebar-user"><strong id="siteSidebarName">U1Trader Member</strong><span id="siteSidebarEmail"></span><button class="site-sidebar-link" id="siteMaintenanceToggle" type="button"><span class="site-sidebar-icon">🛠</span><span class="site-sidebar-text">Maintenance: OFF</span></button><button class="site-sidebar-link" id="siteLogoutBtn" type="button" style="margin-top:12px"><span class="site-sidebar-icon">↪</span><span class="site-sidebar-text">Logout</span></button></div>
 </aside>
-<div id="siteMaintenanceScreen" aria-live="polite" role="status">
+<div id="siteMaintenanceScreen" class="is-visible" aria-live="polite" role="status">
  <div class="maintenance-inner">
   <div class="maintenance-icon" aria-hidden="true">⚒</div>
   <div class="maintenance-brand">U1TRADER</div>
@@ -281,10 +281,10 @@ function isSiteAdmin(user){
 }
 let siteMaintenanceEnabled=false,siteMaintenanceLoaded=false;
 function renderMaintenanceMode(){
- const userEmail=document.getElementById('siteSidebarEmail')?.textContent||'';
  const admin=document.body.classList.contains('site-admin');
  const screen=document.getElementById('siteMaintenanceScreen');
- if(screen)screen.classList.toggle('is-visible',siteMaintenanceEnabled&&!admin);
+ // Keep the maintenance screen in front while checking the saved setting to prevent a welcome-page flash on refresh.
+ if(screen)screen.classList.toggle('is-visible',(!siteMaintenanceLoaded||siteMaintenanceEnabled)&&!admin);
  const toggle=document.getElementById('siteMaintenanceToggle');
  if(toggle){toggle.querySelector('.site-sidebar-text').textContent='Maintenance: '+(siteMaintenanceEnabled?'ON':'OFF');toggle.classList.toggle('active',siteMaintenanceEnabled);}
 }
@@ -294,7 +294,7 @@ async function refreshMaintenanceMode(){
   if(error)throw error;
   siteMaintenanceEnabled=!!row?.dashboard_data?.siteMaintenanceEnabled;
   siteMaintenanceLoaded=true;renderMaintenanceMode();
- }catch(error){console.warn('Maintenance status could not be loaded:',error.message);}
+ }catch(error){console.warn('Maintenance status could not be loaded:',error.message);siteMaintenanceLoaded=true;renderMaintenanceMode();}
 }
 async function setMaintenanceMode(next){
  const {data:{user}}=await siteSupabase.auth.getUser();
