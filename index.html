@@ -542,6 +542,8 @@ window.addEventListener('message',async event=>{
   if(event.data?.type==='U1TRADER_CLOSE_COMPETITION'){
     closeCompetitionApp();
     document.getElementById('siteCompetitionBtn')?.classList.remove('active');
+    document.getElementById('siteGlobalCompetitionBtn')?.classList.remove('active');
+    document.getElementById('siteGlobalHomeBtn')?.classList.add('active');
     const h=String(event.data.hash||'');
     const target=/^#[\w-]+$/.test(h)?document.querySelector(h):null;
     if(target)target.scrollIntoView({behavior:'smooth'});else window.scrollTo({top:0,behavior:'smooth'});
