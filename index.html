@@ -124,7 +124,7 @@ body.site-admin #siteMaintenanceToggle{display:flex}
   <div class="site-profile-row"><small>Full name</small><strong id="siteProfileName">—</strong></div>
   <div class="site-profile-row"><small>Phone number</small><strong id="siteProfilePhone">—</strong></div>
   <div class="site-profile-row"><small>Email address</small><strong id="siteProfileEmail">—</strong></div>
-  <button type="button" id="siteForgotPassword" class="site-forgot-link">Forgot password?</button>
+  
   <div class="site-auth-actions"><button class="btn site-auth-close" type="button" id="siteProfileClose">Close</button><button class="btn" type="button" id="siteProfileEdit">Edit profile</button></div>
   <div class="site-auth-message" id="siteProfileMessage" role="status" aria-live="polite"></div>
   <div id="siteProfileEditFields" style="display:none">
@@ -165,6 +165,7 @@ body.site-admin #siteMaintenanceToggle{display:flex}
   <label class="site-auth-field" id="sitePhoneWrap">Phone number<input id="siteAuthPhone" type="tel" autocomplete="tel" maxlength="25" placeholder="Your phone number"></label>
   <label class="site-auth-field">Email address<input id="siteAuthEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required></label>
   <label class="site-auth-field">Password<input id="siteAuthPassword" type="password" autocomplete="current-password" minlength="8" placeholder="Password (at least 8 characters)" required></label>
+   <button type="button" id="siteForgotPassword" class="site-forgot-link">Forgot password?</button>
   <div class="site-auth-actions">
    <button type="button" class="btn site-auth-close" id="siteAuthCancel">Cancel</button>
    <button type="button" class="btn" id="siteAuthSubmit">Login</button>
@@ -367,11 +368,11 @@ async function showSiteProfile(){
  if(userError||!user){siteAuthBack.classList.add('is-open');setSiteAuthMode('login');document.getElementById('siteAuthMessage').textContent='Please log in to view your profile.';return}
  const {data:profile,error}=await siteSupabase.from('user_profiles').select('full_name,phone,email').eq('id',user.id).maybeSingle();
  const p=profile||{};
- document.getElementById('siteProfileName').textContent=p.full_name||user.user_metadata?.full_name||'Not provided';
- document.getElementById('siteProfilePhone').textContent=p.phone||user.user_metadata?.phone||'Not provided';
+ document.getElementById('siteProfileName').textContent=user.user_metadata?.full_name||p.full_name||'Not provided';
+ document.getElementById('siteProfilePhone').textContent=user.user_metadata?.phone||p.phone||'Not provided';
  document.getElementById('siteProfileEmail').textContent=p.email||user.email||'Not provided';
- document.getElementById('siteEditName').value=p.full_name||user.user_metadata?.full_name||'';
- document.getElementById('siteEditPhone').value=p.phone||user.user_metadata?.phone||'';
+ document.getElementById('siteEditName').value=user.user_metadata?.full_name||p.full_name||'';
+ document.getElementById('siteEditPhone').value=user.user_metadata?.phone||p.phone||'';
  document.getElementById('siteProfileMessage').textContent=error?'Profile details loaded from your account; profile table may need setup.':'';
  document.getElementById('siteProfileEditFields').style.display='none';
  document.getElementById('siteProfileBack').classList.add('is-open');
@@ -381,20 +382,21 @@ document.getElementById('siteTopProfile').addEventListener('click',showSiteProfi
 document.getElementById('siteProfileClose').addEventListener('click',()=>document.getElementById('siteProfileBack').classList.remove('is-open'));
 document.getElementById('siteProfileEdit').addEventListener('click',()=>{document.getElementById('siteProfileEditFields').style.display='block';document.getElementById('siteProfileMessage').textContent='';});
 document.getElementById('siteProfileSave').addEventListener('click',async()=>{
- const {data:{user}}=await siteSupabase.auth.getUser();if(!user)return;
- const full_name=document.getElementById('siteEditName').value.trim();
- const phone=document.getElementById('siteEditPhone').value.trim();
- const msg=document.getElementById('siteProfileMessage');
- if(!full_name){msg.textContent='Please enter your full name.';return}
- const {error}=await siteSupabase.from('user_profiles').upsert({id:user.id,full_name,phone,email:user.email,updated_at:new Date().toISOString()},{onConflict:'id'});
- if(error){msg.textContent='Could not save profile: '+error.message;return}
- await siteSupabase.auth.updateUser({data:{full_name,phone}});
- document.getElementById('siteProfileName').textContent=full_name;
- document.getElementById('siteProfilePhone').textContent=phone||'Not provided';
- document.getElementById('siteSidebarName').textContent=full_name;
- document.getElementById('siteProfileEditFields').style.display='none';
- msg.textContent='Profile updated.';
-});
+  const {data:{user}}=await siteSupabase.auth.getUser();if(!user)return;
+  const full_name=document.getElementById('siteEditName').value.trim();
+  const phone=document.getElementById('siteEditPhone').value.trim();
+  const msg=document.getElementById('siteProfileMessage');
+  if(!full_name){msg.textContent='Please enter your full name.';return}
+  const {error:authError}=await siteSupabase.auth.updateUser({data:{full_name,phone}});
+  if(authError){msg.textContent='Could not update profile: '+authError.message;return}
+  const {error:profileError}=await siteSupabase.from('user_profiles').upsert({id:user.id,full_name,phone,email:user.email,updated_at:new Date().toISOString()},{onConflict:'id'});
+  document.getElementById('siteProfileName').textContent=full_name;
+  document.getElementById('siteProfilePhone').textContent=phone||'Not provided';
+  document.getElementById('siteSidebarName').textContent=full_name;
+  document.getElementById('siteTopProfileInitial').textContent=(full_name.trim()[0]||'U').toUpperCase();
+  document.getElementById('siteProfileEditFields').style.display='none';
+  msg.textContent=profileError?'Name and phone saved to your account. Profile database sync failed due to permissions; contact site admin to enable profile-table updates.':'Profile updated successfully.';
+ });
 document.getElementById('siteCompetitionBtn').addEventListener('click',()=>{
  document.getElementById('siteCompetitionBtn').classList.add('active');
  openCompetitionApp();
