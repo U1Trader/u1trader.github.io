@@ -277,7 +277,11 @@ function closeCompetitionApp(){
   competitionOverlay?.setAttribute('aria-hidden','true');
   document.body.classList.remove('competition-overlay-open');
 }
-// Competition links first show the main-site login modal; successful login opens the app.
+document.querySelectorAll('.js-open-competition').forEach(link=>link.addEventListener('click',event=>{
+ event.preventDefault();
+ if(document.body.classList.contains('site-locked'))openSiteAuth(event);
+ else openCompetitionApp(event);
+}));
 document.getElementById('closeCompetitionApp')?.addEventListener('click',closeCompetitionApp);
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&competitionOverlay?.classList.contains('is-open'))closeCompetitionApp()});
 
