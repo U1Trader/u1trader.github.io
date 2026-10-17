@@ -148,6 +148,12 @@ body.site-unlocked .site-top-profile-initial{width:28px!important;height:28px!im
 /* the header's own bottom border is the single divider line */
 body.site-unlocked>main{border-top:0!important}
 </style>
+<style id="competition-fullscreen-no-bar">
+/* The competition page now has its own sidebar/top bar, so the extra overlay bar is not needed. */
+.competition-app-bar{display:none!important}
+.competition-app-frame{height:100%!important}
+@media(max-width:700px){body.site-unlocked #siteSidebarToggle{left:70px!important}}
+</style>
 </head>
 <body>
 
@@ -496,6 +502,14 @@ async function sendMainSiteSessionToCompetition(){
 window.addEventListener('message',async event=>{
   if(event.origin!=='https://u1trader.github.io')return;
   if(event.data?.type==='U1TRADER_COMPETITION_READY'){sendMainSiteSessionToCompetition();return;}
+  if(event.data?.type==='U1TRADER_CLOSE_COMPETITION'){
+    closeCompetitionApp();
+    document.getElementById('siteCompetitionBtn')?.classList.remove('active');
+    const h=String(event.data.hash||'');
+    const target=/^#[\w-]+$/.test(h)?document.querySelector(h):null;
+    if(target)target.scrollIntoView({behavior:'smooth'});else window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
   if(event.data?.type==='U1TRADER_LOGOUT_REQUEST'){
     await siteSupabase.auth.signOut();
     closeCompetitionApp();
