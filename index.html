@@ -527,6 +527,8 @@ function openCompetitionApp(event){
     competitionFrame.src='https://u1trader.github.io/U1trader-Competition/';
   }else{
     sendMainSiteSessionToCompetition();
+    // Re-opening from the main page always starts on the competitions list.
+    competitionFrame.contentWindow?.postMessage({type:'U1TRADER_OPEN_HUB'},'https://u1trader.github.io');
   }
   competitionOverlay.classList.add('is-open');
   competitionOverlay.setAttribute('aria-hidden','false');
