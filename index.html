@@ -124,7 +124,7 @@ function closeCompetitionApp(){
   competitionOverlay?.setAttribute('aria-hidden','true');
   document.body.classList.remove('competition-overlay-open');
 }
-document.querySelectorAll('.js-open-competition').forEach(link=>link.addEventListener('click',openCompetitionApp));
+// Competition links first show the main-site login modal; successful login opens the app.
 document.getElementById('closeCompetitionApp')?.addEventListener('click',closeCompetitionApp);
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&competitionOverlay?.classList.contains('is-open'))closeCompetitionApp()});
 
