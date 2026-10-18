@@ -238,6 +238,20 @@ body.competition-overlay-open>header.nav{z-index:2147482500!important}
 .competition-app-overlay.is-open{height:auto!important;min-height:0!important;overflow:hidden!important}
 .competition-app-frame{display:block!important;flex:1 1 0!important;min-height:0!important;height:auto!important;width:100%!important}
 </style>
+<style id="profile-popup-above-competition-fix">
+/* Keep the profile dropdown fully above the main navigation and Competition iframe. */
+body.competition-overlay-open #siteGlobalProfileMenu{
+ position:fixed!important;
+ z-index:2147483002!important;
+ right:18px!important;
+ top:62px!important;
+ max-height:calc(100vh - 74px)!important;
+ overflow-y:auto!important;
+}
+@media(max-width:700px){
+ body.competition-overlay-open #siteGlobalProfileMenu{right:8px!important;top:60px!important;max-height:calc(100vh - 68px)!important}
+}
+</style>
 </head>
 <body>
 
