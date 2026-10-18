@@ -203,7 +203,12 @@ body.site-unlocked header.nav .site-global-center-nav.navlinks a:hover,body.site
  body.site-unlocked header.nav .navin{height:auto!important;min-height:var(--topbar-h)!important;flex-wrap:wrap!important;padding:10px 0!important;row-gap:8px!important}
  body.site-unlocked header.nav .site-global-center-nav.navlinks{position:static!important;left:auto!important;top:auto!important;transform:none!important;order:3!important;width:100%!important;max-width:100%!important;height:auto!important;justify-content:flex-start!important;gap:clamp(16px,4vw,28px)!important;overflow-x:auto!important;padding:0 0 3px!important}
 }
-</style></head>
+</style><style id="keep-left-sidebar-visible-on-all-pages">
+/* Keep the left sidebar, including My Profile, available after login and while Competition is open. */
+body.site-unlocked #siteSidebar{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:100002!important}
+body.site-unlocked #siteSidebarToggle{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:100003!important}
+</style>
+</head>
 <body>
 
 <aside class="site-sidebar" id="siteSidebar" aria-label="Main navigation">
@@ -622,6 +627,20 @@ function closeCompetitionApp(){
   competitionOverlay?.setAttribute('aria-hidden','true');
   document.body.classList.remove('competition-overlay-open');
 }
+/* Parent header links must close the Competition iframe before navigating to main-site sections. */
+document.querySelectorAll('header.nav .site-global-center-nav a[href^="#"]').forEach(link=>{
+ link.addEventListener('click',event=>{
+  if(!competitionOverlay?.classList.contains('is-open'))return;
+  const hash=link.getAttribute('href')||'';
+  if(!/^#[\\w-]+$/.test(hash))return;
+  const target=document.getElementById(hash.slice(1));
+  if(!target)return;
+  event.preventDefault();
+  closeCompetitionApp();
+  history.replaceState(null,'',hash);
+  requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
+ });
+});
 document.querySelectorAll('.js-open-competition').forEach(link=>link.addEventListener('click',event=>{
  event.preventDefault();
  if(document.body.classList.contains('site-locked'))openSiteAuth(event);
