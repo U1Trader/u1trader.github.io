@@ -265,7 +265,7 @@ body.competition-overlay-open #siteGlobalProfileMenu{
 </aside>
 <button type="button" id="siteSidebarToggle" aria-label="Close navigation" aria-expanded="true" title="Close / open navigation"><span></span><span></span><span></span></button>
 
-<div id="siteMaintenanceScreen" class="is-visible" aria-live="polite" role="status">
+<div id="siteMaintenanceScreen" aria-live="polite" role="status">
  <div class="maintenance-inner">
   <div class="maintenance-icon" aria-hidden="true">⚒</div>
   <div class="maintenance-brand">U1TRADER</div>
@@ -460,7 +460,7 @@ function renderMaintenanceMode(){
  const admin=document.body.classList.contains('site-admin');
  const screen=document.getElementById('siteMaintenanceScreen');
  // Keep the maintenance screen in front while checking the saved setting to prevent a welcome-page flash on refresh.
- if(screen)screen.classList.toggle('is-visible',(!siteMaintenanceLoaded||siteMaintenanceEnabled)&&!admin);
+ if(screen)screen.classList.toggle('is-visible',siteMaintenanceLoaded&&siteMaintenanceEnabled&&!admin);
  const toggle=document.getElementById('siteMaintenanceToggle');
  if(toggle){const label=toggle.querySelector('.site-sidebar-text');if(label)label.textContent='Maintenance: '+(siteMaintenanceEnabled?'ON':'OFF');toggle.classList.toggle('active',siteMaintenanceEnabled);}
  const profileToggle=document.getElementById('sgpmMaintenance');
