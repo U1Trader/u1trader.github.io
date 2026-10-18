@@ -565,8 +565,18 @@ window.addEventListener('message',async event=>{
     document.getElementById('siteGlobalCompetitionBtn')?.classList.remove('active');
     document.getElementById('siteGlobalHomeBtn')?.classList.add('active');
     const h=String(event.data.hash||'');
-    const target=/^#[\w-]+$/.test(h)?document.querySelector(h):null;
-    if(target)target.scrollIntoView({behavior:'smooth'});else window.scrollTo({top:0,behavior:'smooth'});
+    const validHash=/^#[\w-]+$/.test(h);
+    const target=validHash?document.getElementById(h.slice(1)):null;
+    // Close the iframe first, then scroll the parent page to the requested section.
+    requestAnimationFrame(()=>{
+      if(target){
+        history.replaceState(null,'',h);
+        target.scrollIntoView({behavior:'smooth',block:'start'});
+      }else if(!h || h==='#home'){
+        history.replaceState(null,'','#home');
+        window.scrollTo({top:0,behavior:'smooth'});
+      }
+    });
     return;
   }
   if(event.data?.type==='U1TRADER_LOGOUT_REQUEST'){
