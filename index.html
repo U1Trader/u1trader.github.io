@@ -261,6 +261,16 @@ body.competition-overlay-open #siteGlobalProfileMenu{
  body.competition-overlay-open #siteGlobalProfileMenu{right:8px!important;top:60px!important;max-height:calc(100vh - 68px)!important}
 }
 </style>
+
+<style id="u1-maintenance-hide-site-header">
+/* Maintenance mode is a full-screen state: hide the shared header/profile controls too. */
+html body.site-maintenance-active>header.nav,
+html body.site-maintenance-active>.site-top-profile,
+html body.site-maintenance-active>.site-sidebar,
+html body.site-maintenance-active>#siteSidebarToggle{display:none!important;visibility:hidden!important}
+html body #siteMaintenanceScreen{z-index:2147483647!important;position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100vh!important;box-sizing:border-box!important}
+html body #siteMaintenanceScreen.is-visible{display:flex!important}
+</style>
 </head>
 <body>
 
@@ -470,7 +480,9 @@ function renderMaintenanceMode(){
  const admin=document.body.classList.contains('site-admin');
  const screen=document.getElementById('siteMaintenanceScreen');
  // Keep the maintenance screen in front while checking the saved setting to prevent a welcome-page flash on refresh.
- if(screen)screen.classList.toggle('is-visible',siteMaintenanceLoaded&&siteMaintenanceEnabled&&!admin);
+ const maintenanceActive=siteMaintenanceLoaded&&siteMaintenanceEnabled&&!admin;
+ if(screen)screen.classList.toggle('is-visible',maintenanceActive);
+ document.body.classList.toggle('site-maintenance-active',maintenanceActive);
  const toggle=document.getElementById('siteMaintenanceToggle');
  if(toggle){const label=toggle.querySelector('.site-sidebar-text');if(label)label.textContent='Maintenance: '+(siteMaintenanceEnabled?'ON':'OFF');toggle.classList.toggle('active',siteMaintenanceEnabled);}
  const profileToggle=document.getElementById('sgpmMaintenance');
