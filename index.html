@@ -601,6 +601,12 @@ siteSupabase.auth.onAuthStateChange((event,session)=>{
  }
 });
 
+window.addEventListener('message',event=>{
+ if(event.origin!=='https://u1trader.github.io'||!event.data||event.data.type!=='U1TRADER_COMPETITION_ROUTE')return;
+ const route=String(event.data.path||'');
+ if(!/^\/(?:U1trader-Competition\/|U1trader-Competition\/competition\.html|U1trader-Competition\/register\.html|U1trader-Competition\/login\.html|U1trader-Competition\/dashboard\.html)/.test(route))return;
+ try{sessionStorage.setItem('u1traderCompRoute',route);}catch(e){}
+});
 const competitionOverlay=document.getElementById('competitionAppOverlay');
 const competitionFrame=document.getElementById('competitionAppFrame');
 async function sendMainSiteSessionToCompetition(){
@@ -656,7 +662,10 @@ function openCompetitionApp(event,restore){
   if(!competitionOverlay||!competitionFrame)return;
   if(!competitionFrame.src){
     competitionFrame.addEventListener('load',sendMainSiteSessionToCompetition);
-    competitionFrame.src='https://u1trader.github.io/U1trader-Competition/';
+    let savedRoute='';
+    try{savedRoute=restore?sessionStorage.getItem('u1traderCompRoute')||'':'';}catch(e){}
+    const safeRoute=/^\/(?:U1trader-Competition\/|U1trader-Competition\/competition\.html|U1trader-Competition\/register\.html|U1trader-Competition\/login\.html|U1trader-Competition\/dashboard\.html)/.test(savedRoute)?savedRoute:'/U1trader-Competition/';
+    competitionFrame.src='https://u1trader.github.io'+safeRoute;
   }else{
     sendMainSiteSessionToCompetition();
     // Re-opening from the main page always starts on the competitions list.
