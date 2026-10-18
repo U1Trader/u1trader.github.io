@@ -462,7 +462,9 @@ function renderMaintenanceMode(){
  // Keep the maintenance screen in front while checking the saved setting to prevent a welcome-page flash on refresh.
  if(screen)screen.classList.toggle('is-visible',(!siteMaintenanceLoaded||siteMaintenanceEnabled)&&!admin);
  const toggle=document.getElementById('siteMaintenanceToggle');
- if(toggle){toggle.querySelector('.site-sidebar-text').textContent='Maintenance: '+(siteMaintenanceEnabled?'ON':'OFF');toggle.classList.toggle('active',siteMaintenanceEnabled);}
+ if(toggle){const label=toggle.querySelector('.site-sidebar-text');if(label)label.textContent='Maintenance: '+(siteMaintenanceEnabled?'ON':'OFF');toggle.classList.toggle('active',siteMaintenanceEnabled);}
+ const profileToggle=document.getElementById('sgpmMaintenance');
+ if(profileToggle){profileToggle.textContent='🛠 Maintenance: '+(siteMaintenanceEnabled?'ON':'OFF');profileToggle.setAttribute('aria-pressed',String(siteMaintenanceEnabled));profileToggle.classList.toggle('active',siteMaintenanceEnabled);}
 }
 async function refreshMaintenanceMode(){
  try{
