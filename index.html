@@ -668,16 +668,12 @@ function openCompetitionApp(event,restore){
     competitionFrame.src='https://u1trader.github.io'+safeRoute;
   }else{
     sendMainSiteSessionToCompetition();
-    // A fresh Competition click must leave registration/admin subpages and load the dashboard.
-    // Those pages do not all listen for U1TRADER_OPEN_HUB, so a message alone is insufficient.
+    // A fresh Competition click always reloads the dashboard. The iframe src attribute
+    // does not change when the child navigates to register.html, so route messages alone
+    // are not enough to detect that it is still showing a registration subpage.
     if(!restore){
-      const currentRoute=(()=>{try{return new URL(competitionFrame.src).pathname}catch(e){return ''}})();
-      if(currentRoute!=='/U1trader-Competition/'&&currentRoute!=='/U1trader-Competition/index.html'){
-        competitionFrame.addEventListener('load',sendMainSiteSessionToCompetition,{once:true});
-        competitionFrame.src='https://u1trader.github.io/U1trader-Competition/index.html';
-      }else{
-        competitionFrame.contentWindow?.postMessage({type:'U1TRADER_OPEN_HUB'},'https://u1trader.github.io');
-      }
+      competitionFrame.addEventListener('load',sendMainSiteSessionToCompetition,{once:true});
+      competitionFrame.src='https://u1trader.github.io/U1trader-Competition/index.html';
     }
   }
   competitionOverlay.classList.add('is-open');
