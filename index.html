@@ -668,8 +668,17 @@ function openCompetitionApp(event,restore){
     competitionFrame.src='https://u1trader.github.io'+safeRoute;
   }else{
     sendMainSiteSessionToCompetition();
-    // Re-opening from the main page always starts on the competitions list.
-    if(!restore)competitionFrame.contentWindow?.postMessage({type:'U1TRADER_OPEN_HUB'},'https://u1trader.github.io');
+    // A fresh Competition click must leave registration/admin subpages and load the dashboard.
+    // Those pages do not all listen for U1TRADER_OPEN_HUB, so a message alone is insufficient.
+    if(!restore){
+      const currentRoute=(()=>{try{return new URL(competitionFrame.src).pathname}catch(e){return ''}})();
+      if(currentRoute!=='/U1trader-Competition/'&&currentRoute!=='/U1trader-Competition/index.html'){
+        competitionFrame.addEventListener('load',sendMainSiteSessionToCompetition,{once:true});
+        competitionFrame.src='https://u1trader.github.io/U1trader-Competition/index.html';
+      }else{
+        competitionFrame.contentWindow?.postMessage({type:'U1TRADER_OPEN_HUB'},'https://u1trader.github.io');
+      }
+    }
   }
   competitionOverlay.classList.add('is-open');
   competitionOverlay.setAttribute('aria-hidden','false');
