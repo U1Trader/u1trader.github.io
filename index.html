@@ -541,7 +541,9 @@ function setSiteUnlocked(user){
  renderMaintenanceMode();
 }
 document.getElementById('maintenanceAdminLogin').addEventListener('click',()=>{
- siteAuthBack.style.zIndex='300000';
+ // Hide the maintenance overlay so the admin login dialog is visible above it.
+ document.getElementById('siteMaintenanceScreen')?.classList.remove('is-visible');
+ siteAuthBack.style.zIndex='2147483647';
  siteAuthBack.classList.add('is-open');
  setSiteAuthMode('login');
  document.getElementById('siteAuthCancel').style.display='none';
