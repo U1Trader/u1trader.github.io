@@ -601,6 +601,11 @@ siteSupabase.auth.getSession().then(({data:{session}})=>{
  }else setSiteLocked();
  siteAuthLoaded=true;
  releaseMainSiteAfterBoot();
+}).catch(error=>{
+ console.warn('Session initialization failed:',error);
+ setSiteLocked();
+ siteAuthLoaded=true;
+ releaseMainSiteAfterBoot();
 });
 siteSupabase.auth.onAuthStateChange((event,session)=>{
  if(event==='PASSWORD_RECOVERY'){showPasswordResetForm();return}
