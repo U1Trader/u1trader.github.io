@@ -208,6 +208,17 @@ body.site-unlocked header.nav .site-global-center-nav.navlinks a:hover,body.site
 body.site-unlocked #siteSidebar{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:100002!important}
 body.site-unlocked #siteSidebarToggle{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:100003!important}
 </style>
+<style id="restore-sidebar-page-layout">
+/* Preserve the original content offset when the left sidebar is visible. */
+body.site-unlocked #siteSidebar{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:100002!important}
+body.site-unlocked #siteSidebarToggle{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:100003!important}
+body.site-unlocked>header.nav,body.site-unlocked>main,body.site-unlocked>footer{margin-left:236px!important}
+body.site-unlocked.site-sidebar-collapsed>header.nav,body.site-unlocked.site-sidebar-collapsed>main,body.site-unlocked.site-sidebar-collapsed>footer{margin-left:0!important}
+@media(max-width:700px){
+ body.site-unlocked>header.nav,body.site-unlocked>main,body.site-unlocked>footer{margin-left:62px!important}
+ body.site-unlocked.site-sidebar-collapsed>header.nav,body.site-unlocked.site-sidebar-collapsed>main,body.site-unlocked.site-sidebar-collapsed>footer{margin-left:0!important}
+}
+</style>
 </head>
 <body>
 
