@@ -4,6 +4,15 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#000000"><meta name="background-color" content="#000000"><meta name="description" content="U1Trader — Tharmesh's trading journey, payout gallery, trading resources and competition leaderboard.">
 <title>U1Trader | Tharmesh</title>
+<script id="u1-hard-refresh-boot-guard">
+document.documentElement.classList.add('u1-hard-refresh-pending');
+window.__u1ReleaseHardRefreshGuard=function(){
+ document.documentElement.classList.remove('u1-hard-refresh-pending');
+};
+</script>
+<style id="u1-hard-refresh-boot-guard-style">
+html.u1-hard-refresh-pending body{visibility:hidden!important}
+</style>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="/u1trader-favicon.png?v=3">
 <link rel="apple-touch-icon" href="/u1trader-favicon.png?v=3">
@@ -455,7 +464,8 @@ function isSiteAdmin(user){
  // The designated owner must always be able to recover access and turn maintenance off.
  return String(user?.email||'').trim().toLowerCase()==='tharmesh2001@gmail.com';
 }
-let siteMaintenanceEnabled=false,siteMaintenanceLoaded=false;
+let siteMaintenanceEnabled=false,siteMaintenanceLoaded=false,siteAuthLoaded=false;
+function releaseMainSiteAfterBoot(){if(siteMaintenanceLoaded&&siteAuthLoaded)window.__u1ReleaseHardRefreshGuard?.();}
 function renderMaintenanceMode(){
  const admin=document.body.classList.contains('site-admin');
  const screen=document.getElementById('siteMaintenanceScreen');
@@ -471,8 +481,8 @@ async function refreshMaintenanceMode(){
   const {data:row,error}=await siteSupabase.from('competition_dashboard').select('dashboard_data').eq('id',1).maybeSingle();
   if(error)throw error;
   siteMaintenanceEnabled=!!row?.dashboard_data?.siteMaintenanceEnabled;
-  siteMaintenanceLoaded=true;renderMaintenanceMode();
- }catch(error){console.warn('Maintenance status could not be loaded:',error.message);siteMaintenanceLoaded=true;renderMaintenanceMode();}
+  siteMaintenanceLoaded=true;renderMaintenanceMode();releaseMainSiteAfterBoot();
+ }catch(error){console.warn('Maintenance status could not be loaded:',error.message);siteMaintenanceLoaded=true;renderMaintenanceMode();releaseMainSiteAfterBoot();}
 }
 async function setMaintenanceMode(next){
  const {data:{user}}=await siteSupabase.auth.getUser();
@@ -589,6 +599,8 @@ siteSupabase.auth.getSession().then(({data:{session}})=>{
   let wasOpen=false;try{wasOpen=sessionStorage.getItem('u1traderCompOpen')==='1'}catch(e){}
   if(wasOpen)openCompetitionApp(null,true);
  }else setSiteLocked();
+ siteAuthLoaded=true;
+ releaseMainSiteAfterBoot();
 });
 siteSupabase.auth.onAuthStateChange((event,session)=>{
  if(event==='PASSWORD_RECOVERY'){showPasswordResetForm();return}
