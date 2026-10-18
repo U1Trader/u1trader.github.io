@@ -211,6 +211,7 @@ body.site-unlocked header.nav .site-global-center-nav.navlinks a:hover,body.site
  <div class="site-sidebar-label">MENU</div>
  
  <button class="site-sidebar-link" id="siteCompetitionBtn" type="button"><span class="site-sidebar-icon">🏆</span><span class="site-sidebar-text">Competition</span></button>
+ <button class="site-sidebar-link" id="siteSidebarProfileBtn" type="button"><span class="site-sidebar-icon">👤</span><span class="site-sidebar-text">My Profile</span></button>
  <div class="site-sidebar-user"><strong id="siteSidebarName">U1Trader Member</strong><span id="siteSidebarEmail"></span><button class="site-sidebar-link" id="siteMaintenanceToggle" type="button"><span class="site-sidebar-icon">🛠</span><span class="site-sidebar-text">Maintenance: OFF</span></button><button class="site-sidebar-link" id="siteLogoutBtn" type="button" style="margin-top:12px"><span class="site-sidebar-icon">↪</span><span class="site-sidebar-text">Logout</span></button></div>
 </aside>
 <button type="button" id="siteSidebarToggle" aria-label="Close navigation" aria-expanded="true" title="Close / open navigation"><span></span><span></span><span></span></button>
@@ -520,6 +521,7 @@ siteSidebarToggle?.addEventListener('click',()=>{
  siteSidebarToggle.setAttribute('aria-label',collapsed?'Open navigation':'Close navigation');
  siteSidebarToggle.title=collapsed?'Open navigation':'Close navigation';
 });
+document.getElementById('siteSidebarProfileBtn').addEventListener('click',()=>showSiteProfile());
 document.getElementById('siteCompetitionBtn').addEventListener('click',()=>{
  document.getElementById('siteCompetitionBtn').classList.add('active');
  openCompetitionApp();
