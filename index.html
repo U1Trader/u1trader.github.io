@@ -233,6 +233,11 @@ body.competition-overlay-open>header.nav{z-index:2147482500!important}
  .competition-app-overlay.is-open{top:56px!important;left:0!important;width:100%!important}
 }
 </style>
+<style id="competition-iframe-bottom-gap-fix">
+/* Ensure the embedded competition view fills the viewport without exposing the black overlay below it. */
+.competition-app-overlay.is-open{height:auto!important;min-height:0!important;overflow:hidden!important}
+.competition-app-frame{display:block!important;flex:1 1 0!important;min-height:0!important;height:auto!important;width:100%!important}
+</style>
 </head>
 <body>
 
@@ -657,7 +662,7 @@ document.querySelectorAll('header.nav .site-global-center-nav a[href^="#"]').for
  link.addEventListener('click',event=>{
   if(!competitionOverlay?.classList.contains('is-open'))return;
   const hash=link.getAttribute('href')||'';
-  if(!/^#[\\w-]+$/.test(hash))return;
+  if(!/^#[\w-]+$/.test(hash))return;
   const target=document.getElementById(hash.slice(1));
   if(!target)return;
   event.preventDefault();
