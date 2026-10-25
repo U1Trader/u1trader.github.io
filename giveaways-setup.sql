@@ -13,7 +13,7 @@ create table if not exists public.giveaway_campaigns (
 );
 alter table public.giveaway_campaigns enable row level security;
 drop policy if exists "Public can read running giveaways" on public.giveaway_campaigns;
-create policy "Public can read running giveaways" on public.giveaway_campaigns for select to anon,authenticated using (status='running' or lower(coalesce(auth.jwt()->>'email',''))='tharmesh2001@gmail.com');
+create policy "Public can read giveaways" on public.giveaway_campaigns for select to anon,authenticated using (true);
 drop policy if exists "Admin creates giveaways" on public.giveaway_campaigns;
 create policy "Admin creates giveaways" on public.giveaway_campaigns for insert to authenticated with check (lower(coalesce(auth.jwt()->>'email',''))='tharmesh2001@gmail.com');
 drop policy if exists "Admin updates giveaways" on public.giveaway_campaigns;
@@ -27,7 +27,7 @@ create table if not exists public.giveaway_entries (
  instagram_username text not null,
  provider text not null,
  account_size text not null,
- code_used text not null,
+ code_used text,
  invoice_path text not null,
  status text not null default 'pending' check(status in ('pending','eligible','disqualified','winner')),
  created_at timestamptz not null default now()
@@ -38,6 +38,7 @@ alter table public.giveaway_entries add column if not exists instagram_username 
 alter table public.giveaway_entries add column if not exists provider text;
 alter table public.giveaway_entries add column if not exists account_size text;
 alter table public.giveaway_entries add column if not exists code_used text;
+alter table public.giveaway_entries alter column code_used drop not null;
 alter table public.giveaway_entries add column if not exists invoice_path text;
 alter table public.giveaway_entries alter column user_id drop not null;
 alter table public.giveaway_entries alter column email drop not null;
@@ -57,7 +58,7 @@ create policy "Public submit while giveaway running" on public.giveaway_entries 
  and length(trim(full_name)) between 2 and 120
  and length(trim(email)) between 5 and 254 and length(trim(instagram_username)) between 1 and 100
  and length(trim(provider)) between 2 and 100 and length(trim(account_size)) between 2 and 100
- and length(trim(code_used)) between 2 and 80
+
  and invoice_path ~ '^[0-9a-fA-F-]{36}\.(jpg|png|webp|pdf)$'
  and exists(select 1 from public.giveaway_campaigns c where c.id=giveaway_id and c.status='running')
 );
