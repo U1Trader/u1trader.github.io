@@ -69,8 +69,6 @@ create policy "Public upload invoice while open" on storage.objects for insert t
 );
 drop policy if exists "Admin reads invoice proofs" on storage.objects;
 create policy "Admin reads invoice proofs" on storage.objects for select to authenticated using (bucket_id='giveaway-invoices' and lower(coalesce(auth.jwt()->>'email',''))='tharmesh2001@gmail.com');
-drop policy if exists "Public deletes own failed invoice upload" on storage.objects;
-create policy "Public deletes own failed invoice upload" on storage.objects for delete to anon, authenticated using (bucket_id='giveaway-invoices' and name ~ '^[0-9a-fA-F-]{36}\.(jpg|png|webp|pdf)$');
 
 create or replace function public.select_giveaway_winner(entry_id uuid)
 returns void language plpgsql security definer set search_path=public as $$
