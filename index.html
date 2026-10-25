@@ -770,3 +770,19 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&competition
 
 
 </body></html>
+
+
+<style id="competition-navbar-to-content-gap-fix">
+/* Keep a visible 28px breathing space between the shared top navigation and the first Competition card. */
+.competition-app-overlay.is-open{
+  top:84px!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  width:100%!important;
+  height:auto!important;
+}
+@media(max-width:700px){
+  .competition-app-overlay.is-open{top:84px!important;}
+}
+</style>
