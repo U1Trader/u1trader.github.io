@@ -45,6 +45,7 @@ alter table public.giveaway_entries enable row level security;
 drop policy if exists "Members can view own giveaway entry" on public.giveaway_entries;
 drop policy if exists "Members can submit own giveaway entry" on public.giveaway_entries;
 drop policy if exists "Public submit while giveaway open" on public.giveaway_entries;
+drop policy if exists "Public submit while giveaway running" on public.giveaway_entries;
 drop policy if exists "Admin reads giveaway entries" on public.giveaway_entries;
 drop policy if exists "Admin updates giveaway entries" on public.giveaway_entries;
 create policy "Public submit while giveaway running" on public.giveaway_entries for insert to anon,authenticated with check (
