@@ -75,6 +75,55 @@ create policy "Public upload invoice while running" on storage.objects for inser
 drop policy if exists "Admin reads invoice proofs" on storage.objects;
 create policy "Admin reads invoice proofs" on storage.objects for select to authenticated using (bucket_id='giveaway-invoices' and lower(coalesce(auth.jwt()->>'email',''))='tharmesh2001@gmail.com');
 
+-- Public-safe winner records and multi-winner draw support
+create table if not exists public.giveaway_winners (
+ id uuid primary key default gen_random_uuid(),
+ giveaway_id uuid not null references public.giveaway_campaigns(id) on delete cascade,
+ entry_id uuid not null references public.giveaway_entries(id) on delete cascade,
+ full_name text not null,
+ instagram_username text not null,
+ selected_at timestamptz not null default now(),
+ unique(giveaway_id, entry_id)
+);
+alter table public.giveaway_winners enable row level security;
+drop policy if exists "Public can view giveaway winners" on public.giveaway_winners;
+create policy "Public can view giveaway winners" on public.giveaway_winners for select to anon, authenticated using (true);
+grant select on public.giveaway_winners to anon, authenticated;
+
+create or replace function public.select_giveaway_winners(p_giveaway_id uuid, p_winner_count integer)
+returns jsonb language plpgsql security definer set search_path=public as $
+declare
+ chosen record;
+ chosen_count integer := 0;
+ winner_list jsonb := '[]'::jsonb;
+begin
+ if lower(coalesce(auth.jwt()->>'email','')) <> 'tharmesh2001@gmail.com' then raise exception 'Admin access only'; end if;
+ if p_winner_count is null or p_winner_count < 1 or p_winner_count > 20 then raise exception 'Choose between 1 and 20 winners'; end if;
+ if not exists(select 1 from public.giveaway_campaigns where id=p_giveaway_id and status='running') then raise exception 'Giveaway is not running'; end if;
+ if (select count(*) from public.giveaway_entries where giveaway_id=p_giveaway_id and status='eligible') < p_winner_count then raise exception 'Not enough eligible entries for the number of winners requested'; end if;
+ for chosen in
+   select id, full_name, instagram_username
+   from public.giveaway_entries
+   where giveaway_id=p_giveaway_id and status='eligible'
+   order by gen_random_uuid()
+   limit p_winner_count
+ loop
+   update public.giveaway_entries set status='winner' where id=chosen.id;
+   insert into public.giveaway_winners(giveaway_id,entry_id,full_name,instagram_username)
+   values(p_giveaway_id,chosen.id,chosen.full_name,chosen.instagram_username)
+   on conflict(giveaway_id,entry_id) do nothing;
+   winner_list := winner_list || jsonb_build_array(jsonb_build_object('full_name',chosen.full_name,'instagram_username',chosen.instagram_username));
+   chosen_count := chosen_count + 1;
+ end loop;
+ if chosen_count <> p_winner_count then raise exception 'Could not select the requested number of winners'; end if;
+ update public.giveaway_campaigns
+ set status='completed',completed_at=now(),winner_entry_id=(select entry_id from public.giveaway_winners where giveaway_id=p_giveaway_id order by selected_at,id limit 1)
+ where id=p_giveaway_id and status='running';
+ return winner_list;
+end; $;
+revoke all on function public.select_giveaway_winners(uuid,integer) from public, anon;
+grant execute on function public.select_giveaway_winners(uuid,integer) to authenticated;
+
 create or replace function public.select_giveaway_winner(p_giveaway_id uuid)
 returns uuid language plpgsql security definer set search_path=public as $$
 declare chosen_id uuid;
