@@ -5,20 +5,90 @@
 
 /* Shared main-site header/profile styling */
 .site-global-center-nav a.active{color:#e5bd32!important;font-weight:800}.site-top-profile{position:fixed;z-index:1500;top:17px;right:18px;display:flex;align-items:center;gap:9px;padding:7px 12px 7px 7px;border:1px solid rgba(217,181,109,.28);border-radius:999px;background:#11110f;color:#f6f2e9;font:600 12px Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 5px 20px #0005}.site-top-profile[hidden]{display:none!important}.site-top-profile-initial{width:28px;height:28px;border-radius:9px;background:#f4dba2;color:#17120a;display:grid;place-items:center;font-size:14px;font-weight:900}.site-top-profile-name{max-width:180px;white-space:nowrap}.site-top-profile:not([hidden]){display:flex}#siteGlobalProfileMenu{position:fixed;z-index:2147482000;right:18px;top:62px;width:min(280px,calc(100vw - 24px));padding:12px;border:1px solid rgba(217,181,109,.32);border-radius:13px;background:#11110f;box-shadow:0 16px 45px #0009;color:#f6f2e9}#siteGlobalProfileMenu[hidden]{display:none!important}#siteGlobalProfileMenu .sgpm-user{padding:5px 7px 12px;border-bottom:1px solid rgba(217,181,109,.18);margin-bottom:8px}#siteGlobalProfileMenu .sgpm-user strong,#siteGlobalProfileMenu .sgpm-user span{display:block;overflow-wrap:anywhere}#siteGlobalProfileMenu .sgpm-user span{color:#bdb6a8;font-size:11px;margin-top:4px}#siteGlobalProfileMenu button{display:flex;align-items:center;gap:9px;width:100%;padding:10px 9px;border:0;border-radius:8px;background:transparent;color:#eee5d5;text-align:left;font:600 12px Inter,system-ui,sans-serif;cursor:pointer}#siteGlobalProfileMenu button:hover{background:#d9b56d1f}.site-profile-back,.site-auth-back{display:none;position:fixed;inset:0;z-index:2147482500;background:#000d;backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:18px}.site-profile-back.is-open,.site-auth-back.is-open{display:flex}.site-profile-card,.site-auth-card{width:min(460px,100%);padding:26px;border:1px solid rgba(217,181,109,.35);border-radius:18px;background:linear-gradient(145deg,#17140e,#090909);box-shadow:0 25px 90px #000b}.site-profile-row{margin:12px 0;padding:12px;border:1px solid #d9b56d33;border-radius:9px;background:#080808}.site-profile-row small{display:block;color:#aaa69b;font-size:11px}.site-profile-row strong{overflow-wrap:anywhere}.site-auth-card h2{margin:8px 0}.site-auth-card p{color:#bdb5a6}.site-auth-tabs,.site-auth-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}.site-auth-field{display:block;margin:12px 0;color:#e6dcc6;font-size:.86rem;font-weight:700}.site-auth-field input{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid #504127;border-radius:9px;background:#080808;color:#fff;font:inherit}.site-auth-message{min-height:22px;margin-top:12px;color:#f4dba2;font-size:.88rem;overflow-wrap:anywhere}@media(max-width:760px){.navin{height:auto;min-height:68px}.navlinks{gap:14px}.site-top-profile{top:8px;right:8px;padding:5px}.site-top-profile-name{display:none}}
-</style><style id="homepage-identical-navigation">
-/* Use the exact homepage navigation dimensions and spacing on Giveaways. */
-html body header.nav{position:sticky!important;top:0!important;z-index:1000!important;width:100%!important;margin:0!important;padding:0!important;background:rgba(9,9,9,.88)!important;backdrop-filter:blur(14px)!important;border-bottom:1px solid var(--line)!important;box-sizing:border-box!important}
-html body header.nav .wrap.navin{width:min(1120px,calc(100% - 32px))!important;height:76px!important;min-height:76px!important;margin:0 auto!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important;flex-wrap:nowrap!important;flex-direction:row!important;box-sizing:border-box!important}
-html body header.nav .logo{display:flex!important;align-items:center!important;gap:9px!important;flex:0 0 auto!important;color:var(--white)!important;text-decoration:none!important;font-weight:900!important;letter-spacing:.11em!important;font-size:1.2rem!important;white-space:nowrap!important}
-html body header.nav .logo .brand-mark{display:block!important;width:34px!important;height:34px!important;object-fit:contain!important;flex:0 0 34px!important;border-radius:50%!important}
-html body header.nav .logo span{color:inherit!important}
-html body header.nav .logo span span{color:var(--gold)!important}
-html body header.nav nav.site-global-center-nav{display:flex!important;position:static!important;left:auto!important;top:auto!important;transform:none!important;height:auto!important;width:auto!important;flex:0 1 auto!important;align-items:center!important;justify-content:flex-end!important;gap:24px!important;margin:0 0 0 auto!important;padding:0!important;overflow:visible!important;flex-wrap:nowrap!important;white-space:nowrap!important;background:transparent!important}
-html body header.nav nav.site-global-center-nav a{display:inline-flex!important;align-items:center!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#d3cbb9!important;text-decoration:none!important;font-size:.9rem!important;font-weight:400!important;white-space:nowrap!important}
-html body header.nav nav.site-global-center-nav a:hover{color:var(--gold2)!important}
-html body header.nav nav.site-global-center-nav a.active{color:var(--gold)!important;font-weight:800!important}
-@media(max-width:760px){html body header.nav .wrap.navin{height:auto!important;min-height:68px!important;padding:14px 0!important;align-items:flex-start!important;flex-direction:column!important;flex-wrap:wrap!important}html body header.nav nav.site-global-center-nav{width:100%!important;gap:14px!important;overflow:auto!important;padding-bottom:4px!important;justify-content:flex-start!important;flex-wrap:nowrap!important}}
+</style><style id="top-nav-single-row-alignment">
+/* One shared top row: sidebar logo, header, menu toggle and profile are all 48px tall,
+   so the sidebar divider and the header divider sit on exactly the same line. */
+:root{--topbar-h:77px}
+body.site-unlocked>header.nav{height:var(--topbar-h)!important;border-bottom:1px solid rgba(217,181,109,.24)!important}
+body.site-unlocked>header.nav .navin{height:calc(var(--topbar-h) - 1px)!important;min-height:0!important;display:flex!important;align-items:center!important;flex-wrap:nowrap!important;padding:0!important}
+body.site-unlocked>header.nav .logo,body.site-unlocked>header.nav .navlinks{align-self:center!important;margin:0!important;white-space:nowrap!important}
+body.site-unlocked>header.nav .navlinks{flex-direction:row!important;align-items:center!important;overflow:visible!important;width:auto!important;padding:0!important}
+body.site-unlocked>header.nav .brand-mark{width:30px!important;height:30px!important;flex:0 0 30px!important}
+body.site-unlocked>header.nav .logo{font-size:1.05rem!important;line-height:1!important}
+/* sidebar top row = same height, divider runs edge to edge */
+body.site-unlocked .site-sidebar{padding-top:0!important}
+body.site-unlocked .site-sidebar-brand{height:var(--topbar-h)!important;box-sizing:border-box!important;margin:0 -14px!important;padding:0 23px!important;align-items:center!important;border-bottom:1px solid rgba(217,181,109,.24)!important}
+body.site-unlocked .site-sidebar-brand img{width:30px!important;height:30px!important}
+body.site-unlocked .site-sidebar-label{margin-top:18px!important}
+/* menu toggle + profile centred inside the 48px row */
+body.site-unlocked #siteSidebarToggle{top:calc((var(--topbar-h) - 30px)/2)!important}
+body.site-unlocked .site-top-profile{top:calc((var(--topbar-h) - 38px)/2)!important;padding:4px 12px 4px 4px!important}
+body.site-unlocked .site-top-profile-initial{width:28px!important;height:28px!important}
+@media(max-width:700px){
+ body.site-unlocked>header.nav{padding-left:62px!important}
+ body.site-unlocked .site-sidebar{padding:0 6px 14px!important}
+ body.site-unlocked .site-sidebar-brand{margin:0 -6px!important;padding:0!important;justify-content:center!important}
+ body.site-unlocked #siteSidebarToggle{top:calc((var(--topbar-h) - 26px)/2)!important}
+ body.site-unlocked .site-top-profile{top:calc((var(--topbar-h) - 36px)/2)!important;right:8px!important;padding:3px!important}
+ body.site-unlocked .site-top-profile-initial{width:30px!important;height:30px!important}
+}
 </style>
+<style id="global-top-navigation-layout">
+body.site-unlocked #siteSidebar,body.site-unlocked #siteSidebarToggle{display:none!important;visibility:hidden!important;pointer-events:none!important}
+body.site-unlocked>header.nav,body.site-unlocked>main,body.site-unlocked>footer{margin-left:0!important}
+body.site-unlocked header.nav .navin{position:relative!important;min-height:72px!important}
+body.site-unlocked header.nav .navlinks{margin-left:auto!important}
+body.site-unlocked .site-global-center-nav{position:absolute;left:50%;top:0;transform:translateX(-50%);height:100%;display:flex;align-items:center;gap:8px}
+body.site-unlocked .site-global-center-nav a{display:inline-flex;align-items:center;padding:9px 12px;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#e6dece;text-decoration:none;font:600 13px Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap;transition:color .18s ease}
+body.site-unlocked .site-global-center-nav a:hover,body.site-unlocked .site-global-center-nav a.active{color:#e5bd32!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+body.site-unlocked .site-top-profile{right:18px!important;top:17px!important}
+body.site-unlocked #siteGlobalProfileMenu{position:fixed;z-index:2147482000;right:18px;top:62px;width:min(280px,calc(100vw - 24px));padding:12px;border:1px solid rgba(217,181,109,.32);border-radius:13px;background:#11110f;box-shadow:0 16px 45px #0009;color:#f6f2e9}
+body.site-unlocked #siteGlobalProfileMenu[hidden]{display:none!important}
+body.site-unlocked #siteGlobalProfileMenu .sgpm-user{padding:5px 7px 12px;border-bottom:1px solid rgba(217,181,109,.18);margin-bottom:8px}
+body.site-unlocked #siteGlobalProfileMenu .sgpm-user strong{display:block;font-size:13px;overflow-wrap:anywhere}
+body.site-unlocked #siteGlobalProfileMenu .sgpm-user span{display:block;color:#bdb6a8;font-size:11px;margin-top:4px;overflow-wrap:anywhere}
+body.site-unlocked #siteGlobalProfileMenu button{display:flex;align-items:center;gap:9px;width:100%;padding:10px 9px;border:0;border-radius:8px;background:transparent;color:#eee5d5;text-align:left;font:600 12px Inter,system-ui,sans-serif;cursor:pointer}
+body.site-unlocked #siteGlobalProfileMenu button:hover{background:rgba(217,181,109,.12);color:#f4dba2}
+body.site-unlocked #siteGlobalProfileMenu .sgpm-danger{color:#ffb0a8}
+@media(max-width:700px){
+ body.site-unlocked header.nav .navin{min-height:64px!important;width:calc(100% - 20px)!important}
+ body.site-unlocked header.nav .navlinks{display:none!important}
+ body.site-unlocked .site-global-center-nav{gap:2px}
+ body.site-unlocked .site-global-center-nav a{padding:8px 7px;font-size:11px}
+ body.site-unlocked .site-top-profile{top:16px!important;right:8px!important;padding:4px!important}
+ body.site-unlocked .site-top-profile-name{display:none!important}
+ body.site-unlocked #siteGlobalProfileMenu{right:8px;top:60px}
+}
+@media(max-width:420px){body.site-unlocked header.nav .logo>span{display:none}body.site-unlocked .site-global-center-nav{left:45%}}
+</style>
+<style id="site-global-center-nav-fix">.site-global-center-nav{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;min-width:0}.site-global-center-nav a{display:inline-flex;align-items:center;padding:9px 12px;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#e6dece;text-decoration:none;font:600 13px Inter,system-ui,sans-serif;white-space:nowrap;transition:color .18s ease}.site-global-center-nav a:hover,.site-global-center-nav a:focus-visible{color:#e5bd32!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important}@media(max-width:800px){.site-global-center-nav{order:3;width:100%;flex:1 0 100%;justify-content:center;flex-wrap:wrap}.site-global-center-nav a{padding:7px 9px;font-size:12px}}</style>
+<style id="evenly-centered-global-navigation">
+/* All seven navigation links share one centred row with equal spacing. */
+body.site-unlocked header.nav .navin{position:relative!important;justify-content:flex-start!important}
+body.site-unlocked header.nav .site-global-center-nav.navlinks{position:absolute!important;left:50%!important;top:0!important;transform:translateX(-50%)!important;height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:clamp(14px,2.1vw,34px)!important;margin:0!important;width:max-content!important;max-width:calc(100% - 280px)!important;overflow:visible!important;white-space:nowrap!important;color:#d3cbb9!important;font-size:.9rem!important}
+body.site-unlocked header.nav .site-global-center-nav.navlinks a{display:inline-flex!important;align-items:center!important;justify-content:center!important;padding:8px 0!important;margin:0!important;white-space:nowrap!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#e6dece!important;font:600 13px Inter,system-ui,sans-serif!important;text-decoration:none!important;transition:color .18s ease!important}
+body.site-unlocked header.nav .site-global-center-nav.navlinks a:hover,body.site-unlocked header.nav .site-global-center-nav.navlinks a.active{color:#e5bd32!important}
+@media(max-width:900px){
+ body.site-unlocked>header.nav{height:auto!important;min-height:var(--topbar-h)!important}
+ body.site-unlocked header.nav .navin{height:auto!important;min-height:var(--topbar-h)!important;flex-wrap:wrap!important;padding:10px 0!important;row-gap:8px!important}
+ body.site-unlocked header.nav .site-global-center-nav.navlinks{position:static!important;left:auto!important;top:auto!important;transform:none!important;order:3!important;width:100%!important;max-width:100%!important;height:auto!important;justify-content:flex-start!important;gap:clamp(16px,4vw,28px)!important;overflow-x:auto!important;padding:0 0 3px!important}
+}
+</style>
+<style id="requested-final-navigation-layout">
+/* Final requested layout: no left sidebar; keep top navigation and right-side profile on every page. */
+body.site-unlocked #siteSidebar,body.site-unlocked #siteSidebarToggle{display:none!important;visibility:hidden!important;pointer-events:none!important}
+body.site-unlocked>header.nav,body.site-unlocked>main,body.site-unlocked>footer{margin-left:0!important}
+body.site-unlocked.site-sidebar-collapsed>header.nav,body.site-unlocked.site-sidebar-collapsed>main,body.site-unlocked.site-sidebar-collapsed>footer{margin-left:0!important}
+body.competition-overlay-open #siteSidebar,body.competition-overlay-open #siteSidebarToggle{display:none!important}
+body.competition-overlay-open .site-top-profile{display:flex!important;visibility:visible!important;pointer-events:auto!important;z-index:2147483000!important}
+.competition-app-overlay.is-open{top:56px!important;left:0!important;right:0!important;bottom:0!important;width:100%!important}
+body.competition-overlay-open>header.nav{z-index:2147482500!important}
+@media(max-width:700px){
+ body.site-unlocked>header.nav,body.site-unlocked>main,body.site-unlocked>footer{margin-left:0!important}
+ .competition-app-overlay.is-open{top:56px!important;left:0!important;width:100%!important}
+}
+</style>
+
 </head><body>
 <header class="nav"><div class="wrap navin"><a class="logo" href="#home"><img class="brand-mark" src="u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="site-global-center-nav navlinks" aria-label="Main navigation"><a href="#home" id="siteGlobalHomeBtn" class="active">Home</a><a href="#discounts">Discounts</a><a href="#payouts">Payout Gallery</a><a href="giveaways.html" id="siteGlobalGiveawaysBtn">Giveaways</a><a href="#competition" id="siteGlobalCompetitionBtn">Competition</a><a href="#about">About</a><a href="#contact" id="siteGlobalContactBtn">Contact</a></nav></div></header>
 <main class="wrap"><section class="hero"><span class="pill">U1Trader - Giving Back Rewards 🎁</span><h1>U1Trader <span>Giveaways</span></h1><p class="hero-description">Purchased a funded account using a U1Trader discount code?<br class="desktop-break"> Upload your invoice proof and enter the draw.</p><span class="status" id="giveawayStatus">Checking giveaway status…</span><div id="activeGiveawayInfo" class="muted" style="margin-top:10px"></div></section><div class="manage-giveaways-action"><a class="btn" href="giveaways-admin.html" id="manageGiveawaysLink" hidden>Manage Giveaways</a></div>
