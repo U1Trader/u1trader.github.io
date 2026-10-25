@@ -13,6 +13,7 @@ create table if not exists public.giveaway_campaigns (
 );
 alter table public.giveaway_campaigns enable row level security;
 drop policy if exists "Public can read running giveaways" on public.giveaway_campaigns;
+drop policy if exists "Public can read giveaways" on public.giveaway_campaigns;
 create policy "Public can read giveaways" on public.giveaway_campaigns for select to anon,authenticated using (true);
 drop policy if exists "Admin creates giveaways" on public.giveaway_campaigns;
 create policy "Admin creates giveaways" on public.giveaway_campaigns for insert to authenticated with check (lower(coalesce(auth.jwt()->>'email',''))='tharmesh2001@gmail.com');
