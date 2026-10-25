@@ -130,7 +130,7 @@ returns void
 language plpgsql
 security definer
 set search_path=public
-as $
+as $$
 begin
  if lower(coalesce(auth.jwt()->>'email','')) <> 'tharmesh2001@gmail.com' then
    raise exception 'Admin access only';
@@ -150,7 +150,7 @@ begin
  set status='running', completed_at=null, winner_entry_id=null
  where id=p_giveaway_id and status='completed';
 end;
-$;
+$$;
 revoke all on function public.reopen_giveaway(uuid) from public, anon;
 grant execute on function public.reopen_giveaway(uuid) to authenticated;
 
