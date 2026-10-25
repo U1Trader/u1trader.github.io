@@ -38,6 +38,7 @@ alter table public.giveaway_entries add column if not exists full_name text;
 alter table public.giveaway_entries add column if not exists instagram_username text;
 alter table public.giveaway_entries add column if not exists provider text;
 alter table public.giveaway_entries add column if not exists account_size text;
+alter table public.giveaway_entries add column if not exists purchase_date date;
 alter table public.giveaway_entries add column if not exists code_used text;
 alter table public.giveaway_entries alter column code_used drop not null;
 alter table public.giveaway_entries add column if not exists invoice_path text;
