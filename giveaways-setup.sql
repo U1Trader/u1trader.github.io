@@ -91,7 +91,7 @@ create policy "Public can view giveaway winners" on public.giveaway_winners for 
 grant select on public.giveaway_winners to anon, authenticated;
 
 create or replace function public.select_giveaway_winners(p_giveaway_id uuid, p_winner_count integer)
-returns jsonb language plpgsql security definer set search_path=public as $
+returns jsonb language plpgsql security definer set search_path=public as $$
 declare
  chosen record;
  chosen_count integer := 0;
@@ -120,7 +120,7 @@ begin
  set status='completed',completed_at=now(),winner_entry_id=(select entry_id from public.giveaway_winners where giveaway_id=p_giveaway_id order by selected_at,id limit 1)
  where id=p_giveaway_id and status='running';
  return winner_list;
-end; $;
+end; $$;
 revoke all on function public.select_giveaway_winners(uuid,integer) from public, anon;
 grant execute on function public.select_giveaway_winners(uuid,integer) to authenticated;
 
