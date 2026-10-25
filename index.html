@@ -805,10 +805,13 @@ body.competition-overlay-open>header.nav .navin{
 <style id="small-thiruvalluvar-before-kural">
 #about .aboutgrid>article.card{display:flex;flex-direction:column}
 #about .thirukkural-note{display:flex;align-items:center;justify-content:center;width:100%;margin:auto 0;padding:30px 0}
-#about .kural-plaque{position:relative;isolation:isolate;box-sizing:border-box;width:100%;padding:26px 34px 22px;border:7px ridge #8a542d;border-radius:5px;background-color:#bd7e42;background-image:repeating-linear-gradient(3deg,rgba(74,35,13,.10) 0px,rgba(74,35,13,.10) 2px,transparent 2px,transparent 9px),repeating-linear-gradient(90deg,rgba(255,224,164,.08) 0px,transparent 3px,rgba(78,39,15,.06) 5px,transparent 10px),linear-gradient(180deg,#f0c48a 0%,#dca061 20%,#e6b477 50%,#c58346 100%);box-shadow:inset 0 0 0 2px #e9bd7d,inset 0 0 0 5px #9b6337,inset 0 8px 15px #fff2cc55,inset 0 -10px 16px #60341255,0 5px 0 #6d4225,0 11px 18px #0006;color:#48240f;text-align:center}
-#about .kural-plaque:before{content:"";position:absolute;inset:8px;border:1px solid rgba(94,48,20,.55);pointer-events:none;z-index:-1}
-#about .kural-number{margin-bottom:13px;color:#673818;font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;font-weight:800;text-shadow:0 1px #f5d4a0}
-#about .kural-plaque p{margin:0;color:#48240f;font-size:clamp(.92rem,1.55vw,1.15rem);font-weight:750;line-height:1.95;text-shadow:0 1px 0 #f5d3a1}
-#about .kural-author{margin-top:14px;text-align:right;color:#653718;font-size:.88rem;font-style:italic;font-weight:700}
-@media(max-width:700px){#about .thirukkural-note{padding:24px 0}#about .kural-plaque{padding:22px 27px 18px;border-width:5px}#about .kural-plaque:before{inset:6px}}
+#about .kural-plaque{position:relative;box-sizing:border-box;width:100%;padding:24px 20px 20px;border:0;border-radius:0;background:transparent;box-shadow:none;color:#e8d8b8;text-align:center}
+#about .kural-plaque:before{content:"";position:absolute;left:50%;top:0;width:64px;height:1px;background:linear-gradient(90deg,transparent,#d9b56d,transparent);transform:translateX(-50%);animation:kuralLineGlow 3.8s ease-in-out infinite}
+#about .kural-number{margin-bottom:13px;color:#d9b56d;font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;animation:kuralTextReveal 1s ease both}
+#about .kural-plaque p{margin:0;color:#e8d8b8;font-size:clamp(.95rem,1.55vw,1.15rem);font-weight:600;line-height:1.95;text-shadow:none;animation:kuralTextReveal 1.2s ease both}
+#about .kural-author{margin-top:14px;text-align:right;color:#aaa69b;font-size:.88rem;font-style:italic;font-weight:500;animation:kuralTextReveal 1.5s ease both}
+@keyframes kuralTextReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kuralLineGlow{0%,100%{opacity:.45;width:44px}50%{opacity:1;width:96px}}
+@media(prefers-reduced-motion:reduce){#about .kural-number,#about .kural-plaque p,#about .kural-author,#about .kural-plaque:before{animation:none}}
+@media(max-width:700px){#about .thirukkural-note{padding:24px 0}#about .kural-plaque{padding:22px 12px 18px}}
 </style>
