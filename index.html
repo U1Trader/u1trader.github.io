@@ -786,3 +786,17 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&competition
   .competition-app-overlay.is-open{top:84px!important;}
 }
 </style>
+
+
+<style id="competition-nav-border-covers-gap-fix">
+/* When Competition is open, extend the navbar's own background and bottom border through the breathing space. */
+body.competition-overlay-open>header.nav{
+  background:#090909!important;
+  padding-bottom:16px!important;
+  box-sizing:border-box!important;
+  border-bottom:1px solid rgba(217,181,109,.24)!important;
+}
+body.competition-overlay-open>header.nav .navin{
+  background:#090909!important;
+}
+</style>
