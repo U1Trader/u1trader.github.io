@@ -80,20 +80,20 @@ create policy "Public upload invoice while running" on storage.objects for inser
 drop policy if exists "Admin reads invoice proofs" on storage.objects;
 create policy "Admin reads invoice proofs" on storage.objects for select to authenticated using (bucket_id='giveaway-invoices' and lower(coalesce(auth.jwt()->>'email',''))='tharmesh2001@gmail.com');
 
-create or replace function public.select_giveaway_winner(giveaway_id uuid)
+create or replace function public.select_giveaway_winner(p_giveaway_id uuid)
 returns uuid language plpgsql security definer set search_path=public as $$
 declare chosen_id uuid;
 begin
  if lower(coalesce(auth.jwt()->>'email','')) <> 'tharmesh2001@gmail.com' then raise exception 'Admin access only'; end if;
- update public.giveaway_campaigns set status='completed',completed_at=now() where id=giveaway_id and status='running';
+ update public.giveaway_campaigns set status='completed',completed_at=now() where id=p_giveaway_id and status='running';
  if not found then raise exception 'Giveaway is not running'; end if;
- select id into chosen_id from public.giveaway_entries where giveaway_entries.giveaway_id=select_giveaway_winner.giveaway_id and status='eligible' order by gen_random_uuid() limit 1;
+ select id into chosen_id from public.giveaway_entries where giveaway_entries.giveaway_id=p_giveaway_id and status='eligible' order by gen_random_uuid() limit 1;
  if chosen_id is null then
-   update public.giveaway_campaigns set status='running',completed_at=null where id=giveaway_id;
+   update public.giveaway_campaigns set status='running',completed_at=null where id=p_giveaway_id;
    raise exception 'No eligible entries. Verify invoices and mark at least one entry eligible before drawing.';
  end if;
  update public.giveaway_entries set status='winner' where id=chosen_id;
- update public.giveaway_campaigns set winner_entry_id=chosen_id where id=giveaway_id;
+ update public.giveaway_campaigns set winner_entry_id=chosen_id where id=p_giveaway_id;
  return chosen_id;
 end; $$;
 revoke all on function public.select_giveaway_winner(uuid) from public,anon;
