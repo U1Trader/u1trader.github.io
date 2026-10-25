@@ -124,6 +124,36 @@ end; $;
 revoke all on function public.select_giveaway_winners(uuid,integer) from public, anon;
 grant execute on function public.select_giveaway_winners(uuid,integer) to authenticated;
 
+-- Admin can reopen a completed giveaway and clear its previous draw so it can run again.
+create or replace function public.reopen_giveaway(p_giveaway_id uuid)
+returns void
+language plpgsql
+security definer
+set search_path=public
+as $
+begin
+ if lower(coalesce(auth.jwt()->>'email','')) <> 'tharmesh2001@gmail.com' then
+   raise exception 'Admin access only';
+ end if;
+ if not exists(select 1 from public.giveaway_campaigns where id=p_giveaway_id and status='completed') then
+   raise exception 'Only a completed giveaway can be reopened';
+ end if;
+
+ update public.giveaway_entries
+ set status='eligible'
+ where giveaway_id=p_giveaway_id and status='winner';
+
+ delete from public.giveaway_winners
+ where giveaway_id=p_giveaway_id;
+
+ update public.giveaway_campaigns
+ set status='running', completed_at=null, winner_entry_id=null
+ where id=p_giveaway_id and status='completed';
+end;
+$;
+revoke all on function public.reopen_giveaway(uuid) from public, anon;
+grant execute on function public.reopen_giveaway(uuid) to authenticated;
+
 create or replace function public.select_giveaway_winner(p_giveaway_id uuid)
 returns uuid language plpgsql security definer set search_path=public as $$
 declare chosen_id uuid;
