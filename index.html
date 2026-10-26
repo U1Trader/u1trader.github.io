@@ -724,7 +724,7 @@ function openCompetitionApp(event,restore){
     competitionFrame.addEventListener('load',sendMainSiteSessionToCompetition);
     let savedRoute='';
     try{savedRoute=restore?sessionStorage.getItem('u1traderCompRoute')||'':'';}catch(e){}
-    const safeRoute=/^\/(?:U1trader-Competition\/|U1trader-Competition\/competition\.html|U1trader-Competition\/register\.html|U1trader-Competition\/registrations-admin\.html|U1trader-Competition\/login\.html|U1trader-Competition\/dashboard\.html)/.test(savedRoute)?savedRoute:'/U1trader-Competition/competition.html';
+    const safeRoute=/^\/(?:U1trader-Competition\/|U1trader-Competition\/competition\.html|U1trader-Competition\/register\.html|U1trader-Competition\/registrations-admin\.html|U1trader-Competition\/login\.html|U1trader-Competition\/dashboard\.html)/.test(savedRoute)?savedRoute:'/U1trader-Competition/';
     competitionFrame.src='https://u1trader.github.io'+safeRoute;
   }else{
     sendMainSiteSessionToCompetition();
@@ -733,7 +733,7 @@ function openCompetitionApp(event,restore){
     // are not enough to detect that it is still showing a registration subpage.
     if(!restore){
       competitionFrame.addEventListener('load',sendMainSiteSessionToCompetition,{once:true});
-      competitionFrame.src='https://u1trader.github.io/U1trader-Competition/competition.html';
+      competitionFrame.src='https://u1trader.github.io/U1trader-Competition/';
     }
   }
   competitionOverlay.classList.add('is-open');
