@@ -245,7 +245,8 @@ body.competition-overlay-open>header.nav{z-index:2147482500!important}
 </style>
 <style id="competition-iframe-bottom-gap-fix">
 /* Ensure the embedded competition view fills the viewport without exposing the black overlay below it. */
-.competition-app-overlay.is-open{height:auto!important;min-height:0!important;overflow:hidden!important}
+.competition-app-overlay.is-open{top:76px!important;left:236px!important;right:0!important;bottom:0!important;width:calc(100% - 236px)!important;height:auto!important;min-height:0!important;overflow:hidden!important}
+body.competition-overlay-open>header.nav{position:fixed!important;top:0!important;left:236px!important;right:0!important;width:calc(100% - 236px)!important;margin:0!important;z-index:2147482500!important}
 .competition-app-frame{display:block!important;flex:1 1 0!important;min-height:0!important;height:auto!important;width:100%!important}
 </style>
 <style id="profile-popup-above-competition-fix">
