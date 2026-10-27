@@ -56,6 +56,9 @@ body.competition-overlay-open{overflow:hidden}
 .site-auth-close{background:#15130f;color:#f4dba2;border-color:rgba(217,181,109,.3)}
 
 
+/* Temporary public mode: normal visitors can view the site without registering. */
+#siteAuthBack .site-auth-tabs,#siteAuthBack #siteNameWrap,#siteAuthBack #sitePhoneWrap,#siteAuthBack #siteForgotPassword{display:none!important}
+#siteAdminFooterTrigger{cursor:pointer}
 /* Signed-in site shell: login is the gate for the whole website */
 body.site-locked>header,body.site-locked>main,body.site-locked>footer,body.site-locked>#toast{display:none!important}
 body.site-locked{overflow:hidden}
@@ -355,7 +358,7 @@ html body.site-maintenance-active>#siteGlobalProfileMenu{display:none!important;
 <div class="cert"><a class="cert-image-link" href="view.html?file=payout-certificate-3227.pdf"><img src="payout-certificate-3227-preview.jpg" alt="Preview of 3,227.72 payout certificate PDF"></a><div class="certlabel"><b>FundedNext Certificate</b><small>$3,227.72 · Oct 19, 2025</small><br><a class="cert-open-link" href="view.html?file=payout-certificate-3227.pdf">Open PDF ↗</a></div></div>
 </div></div></section>
 
-</main><footer class="footer" id="contact"><div class="wrap footerin"><span>© <span id="year"></span> U1Trader · Tharmesh</span><span>Trading involves risk. Payout examples are personal historical results, not guarantees of future performance.</span></div></footer><div class="toast" id="toast">Code copied</div>
+</main><footer class="footer" id="contact"><div class="wrap footerin"><span id="siteAdminFooterTrigger" role="button" tabindex="0" aria-label="Admin login">© <span id="year"></span> U1Trader · Tharmesh</span><span>Trading involves risk. Payout examples are personal historical results, not guarantees of future performance.</span></div></footer><div class="toast" id="toast">Code copied</div>
 <div class="site-auth-back" id="siteAuthBack" role="dialog" aria-modal="true" aria-labelledby="siteAuthTitle">
  <div class="site-auth-card">
   <div class="eyebrow">U1TRADER COMMUNITY</div>
@@ -459,6 +462,21 @@ document.getElementById('siteSaveNewPassword').addEventListener('click',async()=
 document.getElementById('siteRegisterTab').addEventListener('click',()=>setSiteAuthMode('register'));
 document.getElementById('siteLoginTab').addEventListener('click',()=>setSiteAuthMode('login'));
 document.getElementById('siteAuthCancel').addEventListener('click',()=>siteAuthBack.classList.remove('is-open'));
+function openFooterAdminLogin(){
+ setSiteAuthMode('login');
+ document.getElementById('siteAuthTitle').textContent='Admin Login';
+ document.querySelector('#siteAuthBack .site-auth-card>p').textContent='Admin access only. Sign in with the authorized website admin account.';
+ document.getElementById('siteAuthEmail').value='';
+ document.getElementById('siteAuthPassword').value='';
+ document.getElementById('siteAuthCancel').style.display='';
+ document.getElementById('siteResetPanel').classList.remove('is-open');
+ document.querySelector('#siteAuthBack .site-auth-tabs').style.display='none';
+ document.getElementById('siteAuthBack').classList.add('is-open');
+ document.getElementById('siteAuthEmail').focus();
+}
+const siteAdminFooterTrigger=document.getElementById('siteAdminFooterTrigger');
+siteAdminFooterTrigger?.addEventListener('click',openFooterAdminLogin);
+siteAdminFooterTrigger?.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openFooterAdminLogin();}});
 // Competition buttons are handled by the authenticated gate below; do not attach
 // a second unconditional login handler (that caused the duplicate login prompt).
 document.getElementById('siteAuthSubmit').addEventListener('click',async()=>{
@@ -485,6 +503,11 @@ document.getElementById('siteAuthSubmit').addEventListener('click',async()=>{
  }
  const {data:{user}}=await siteSupabase.auth.getUser();
  if(!user){message.textContent='Could not verify the signed-in account.';return}
+ if(!isSiteAdmin(user)){
+  await siteSupabase.auth.signOut();
+  message.textContent='Access denied. Only the website admin can log in here.';
+  return;
+ }
  if(siteMaintenanceEnabled && !isSiteAdmin(user)){
   await siteSupabase.auth.signOut();
   message.textContent='Access denied during maintenance. Please use the authorized admin account.';
@@ -539,6 +562,11 @@ async function setMaintenanceMode(next){
  finally{if(button)button.disabled=false;}
 }
 function setSiteUnlocked(user){
+ if(!isSiteAdmin(user)){
+  document.body.classList.remove('site-locked','site-unlocked','site-admin');
+  siteAuthBack.classList.remove('is-open');
+  return;
+ }
  document.body.classList.remove('site-locked');
  document.body.classList.add('site-unlocked');
  document.body.classList.toggle('site-admin',isSiteAdmin(user));
@@ -565,11 +593,10 @@ document.getElementById('maintenanceAdminLogin').addEventListener('click',()=>{
  document.getElementById('siteAuthPassword').focus();
 });
 function setSiteLocked(){
- document.body.classList.add('site-locked');
- document.body.classList.remove('site-unlocked');
- siteAuthBack.classList.add('is-open');
- setSiteAuthMode('login');
- document.getElementById('siteAuthCancel').style.display='none';
+ // Temporary public mode: do not block visitors with the public login/register screen.
+ document.body.classList.remove('site-locked','site-unlocked','site-admin');
+ siteAuthBack.classList.remove('is-open');
+ document.getElementById('siteAuthCancel').style.display='';
 }
 async function showSiteProfile(){
  const {data:{user},error:userError}=await siteSupabase.auth.getUser();
