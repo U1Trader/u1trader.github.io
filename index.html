@@ -803,6 +803,15 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&competition
 
 
 
+
+<style id="admin-only-my-profile-visibility">
+/* Show My Profile only after the authorized admin has signed in. */
+body.site-admin #siteTopProfile{display:flex!important}
+body.site-admin #siteSidebarProfileBtn{display:flex!important}
+body.site-admin #siteProfileBack.is-open{display:flex!important}
+body.site-admin #siteSidebarUser,body.site-admin .site-sidebar-user{display:block!important}
+</style>
+
 </body></html>
 
 
