@@ -812,6 +812,16 @@ body.site-admin #siteProfileBack.is-open{display:flex!important}
 body.site-admin #siteSidebarUser,body.site-admin .site-sidebar-user{display:block!important}
 </style>
 
+
+<style id="admin-my-profile-functional-visibility-fix">
+/* Admin-only My Profile: restore the existing dropdown and profile modal without touching maintenance mode. */
+html body.site-admin #siteTopProfile{display:flex!important;visibility:visible!important;pointer-events:auto!important}
+html body.site-admin #siteSidebarProfileBtn{display:flex!important;visibility:visible!important;pointer-events:auto!important}
+html body.site-admin #siteGlobalProfileMenu:not([hidden]){display:block!important;visibility:visible!important;pointer-events:auto!important}
+html body.site-admin #siteProfileBack.is-open{display:flex!important;visibility:visible!important;pointer-events:auto!important}
+html body.site-admin #siteProfileBack.is-open .site-profile-card{display:block!important;visibility:visible!important}
+</style>
+
 </body></html>
 
 
