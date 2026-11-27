@@ -31,7 +31,7 @@ permalink: /view/
 <script>
 const params=new URLSearchParams(location.search);
 const file=params.get('file')||'';
-const allowed=/^(topstep-payout-oct-2026\.jpg|fundingpips-reward-3475\.png|fundingpips-reward-4900\.png|fundingpips-all-time-rewards\.png|payout-certificate-(7593\.jpg|7593\.pdf|2360\.pdf|3227\.pdf))$/;
+const allowed=/^(topstep-payout-oct-2026\.jpg|fundingpips-reward-3475\.png|fundingpips-reward-4900\.png|fundingpips-all-time-rewards\.png|payout-certificate-(7593\.jpg|7593\.pdf|2360\.pdf|3227\.pdf)|pipstone-(2215-Nov-11-2026|2036-Nov-14-2026|1512-22-Nov-16-2026)\.png)$/;
 const stage=document.getElementById('stage');
 const title=document.getElementById('title');
 if(!allowed.test(file)){
