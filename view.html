@@ -26,7 +26,7 @@ permalink: /view/
 </style>
 </head>
 <body>
-<header class="topbar"><a class="brand" href="./#home" aria-label="U1Trader Home"><img src="./u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="./#home">Home</a><a href="https://u1trader.github.io/U1trader-Competition/competition.html">Competition</a><a href="./#giveaways">Giveaways</a><a href="./#contact">Contact</a><a href="./#about">About</a><a href="./#discounts">Discounts</a><a href="./#payouts">Payout Gallery</a></nav><div class="viewer-actions"><div class="title" id="title">U1Trader Payout</div><a class="back" href="./#payouts">← Back</a></div></header>
+<header class="topbar"><a class="brand" href="/#home" aria-label="U1Trader Home"><img src="/u1trader-logo-mark.jpg" alt=""><span>U1<span>TRADER</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="/#home">Home</a><a href="https://u1trader.github.io/U1trader-Competition/competition.html">Competition</a><a href="/#giveaways">Giveaways</a><a href="/#contact">Contact</a><a href="/#about">About</a><a href="/#discounts">Discounts</a><a href="/#payouts">Payout Gallery</a></nav><div class="viewer-actions"><div class="title" id="title">U1Trader Payout</div><a class="back" href="/#payouts">← Back</a></div></header>
 <main class="stage" id="stage"><div class="message">Loading payout…</div></main>
 <script>
 const params=new URLSearchParams(location.search);
@@ -35,7 +35,7 @@ const allowed=/^(topstep-payout-oct-2026\.jpg|fundingpips-reward-3475\.png|fundi
 const stage=document.getElementById('stage');
 const title=document.getElementById('title');
 if(!allowed.test(file)){
- stage.innerHTML='<div class="error">File not found. <a style="color:#f0cf78" href="./#payouts">Go back</a></div>';
+ stage.innerHTML='<div class="error">File not found. <a style="color:#f0cf78" href="/#payouts">Go back</a></div>';
 }else{
  title.textContent=file.replace(/[-_]/g,' ');
  if(/\.pdf$/i.test(file)){
@@ -51,7 +51,7 @@ if(!allowed.test(file)){
      try{
        await loadPdfJs();
        pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-       const pdf=await pdfjsLib.getDocument({url:file}).promise;
+       const pdf=await pdfjsLib.getDocument({url:"/"+file}).promise;
        wrap.replaceChildren();
        if(pdf.numPages>1)wrap.classList.add('multipage');
        for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
@@ -73,11 +73,11 @@ if(!allowed.test(file)){
          await page.render({canvasContext:ctx,viewport:page.getViewport({scale:scale*pixelRatio})}).promise;
        }
      }catch(e){
-       wrap.innerHTML='<div class="message">PDF preview could not load.<br><a href="'+file+'" target="_blank" rel="noopener">Open PDF directly</a></div>';
+       wrap.innerHTML='<div class="message">PDF preview could not load.<br><a href="/'+file+'" target="_blank" rel="noopener">Open PDF directly</a></div>';
      }
    })();
  }else{
-   const img=document.createElement('img');img.alt='Payout certificate';img.src=file;stage.replaceChildren(img);
+   const img=document.createElement('img');img.alt='Payout certificate';img.src="/"+file;stage.replaceChildren(img);
  }
 }
 </script>
